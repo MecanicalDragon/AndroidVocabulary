@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Vocabulary</string>
+    <string name="word">word</string>
+    <string name="add_word">Add word</string>
+    <string name="learn">Learn</string>
+    <string name="translation">translation</string>
+    <string name="check">Check</string>
+    <string name="words">Words:</string>
+    <string name="mistakes">Mistakes:</string>
+</resources>
