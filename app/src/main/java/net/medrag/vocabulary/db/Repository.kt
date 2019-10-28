@@ -37,15 +37,15 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
         /**
          * do a transaction
          */
-        db.beginTransaction();
+        db.beginTransaction()
         try {
             db.execSQL(CREATE)
             for (query in queries) {
                 db.insert(TABLE_NAME, null, query)
             }
-            db.setTransactionSuccessful();
+            db.setTransactionSuccessful()
         } finally {
-            db.endTransaction();
+            db.endTransaction()
         }
         Log.i(DATABASE, "Database initialized.")
     }
@@ -96,13 +96,22 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
         return result
     }
 
-//    fun update() {
-//        database.update(
-//            TABLE_NAME,
-//            contentValuesOf(Pair(WORD, "word")),
-//            "ID = ?",
-//            Array<String>(5) { "1" })
-//    }
+    /**
+     * Update existing pair
+     */
+    fun update(pair: Pair) {
+        val content = ContentValues()
+        content.put(WORD, pair.word)
+        content.put(TRANSLATION, pair.trans)
+        content.put(STREAK, pair.streak)
+        content.put(LEARNED, pair.learned)
+        database.update(
+            TABLE_NAME,
+            content,
+            "$ID = ?",
+            Array(1) { pair.id.toString() })
+    }
+
 //
 //    fun delete() {
 //        database.delete(TABLE_NAME, "ID = ?", Array<String>(5) { "1" })

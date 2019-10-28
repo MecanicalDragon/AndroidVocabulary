@@ -416,7 +416,7 @@ const val FILL =
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('saturate','насыщать');\n" +
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('hence','следовательно');\n" +
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('fence','забор, ограда');\n" +
-            "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('I don't mind','я не против');\n" +
+            "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('I dont mind','я не против');\n" +
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('ambiguous','двусмысленный');\n" +
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('dangle','болтаться, свисать');\n" +
             "INSERT INTO $TABLE_NAME ($WORD, $TRANSLATION ) VALUES ('ambiguous','двусмысленный');\n" +
