@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,18 @@ class LearningActivity : AppCompatActivity() {
         setContentView(R.layout.activity_learning)
         database = Repository(this)
         voc = database.extractAll().shuffled()
+
+        tiEdit.setOnEditorActionListener { _, a, _ ->
+            if (a == EditorInfo.IME_ACTION_DONE) {
+                check.performClick()
+                return@setOnEditorActionListener true
+            } else return@setOnEditorActionListener false
+        }
+
+        tiEdit.setOnFocusChangeListener { _, focus ->
+            if (focus) tiEdit.hint = voc[iterator].word else tiEdit.hint = ""
+            return@setOnFocusChangeListener
+        }
 
         if (voc.isNotEmpty()) {
             word.text = voc[iterator].word
