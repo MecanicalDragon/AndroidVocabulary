@@ -11,7 +11,8 @@ class NotificationIntentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_intent)
-        val words: ArrayList<Pair>? = intent?.extras?.get("words") as? ArrayList<Pair>
+        val words: ArrayList<Pair>? =
+            intent?.extras?.get(resources.getString(R.string.wordsFromNotificationIntent)) as? ArrayList<Pair>
         println("ANY:")
         wordPairs.text = words?.map { it.word + "\n----------\n" + it.trans }
             ?.reduce { acc, s -> "$acc\n==========\n$s" }

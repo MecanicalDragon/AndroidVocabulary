@@ -80,7 +80,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
     }
 
     fun getRandomSeveralPairs(amount: Int): ArrayList<Pair> {
-        lateinit var cursor: Cursor
+        var cursor: Cursor? = null
         try {
             cursor = database.rawQuery("select count($ID) as count from $TABLE_NAME", null)
             cursor.moveToFirst()
@@ -102,7 +102,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
      * Get all saved words
      */
     fun extractAll(): List<Pair> {
-        lateinit var cursor: Cursor
+        var cursor: Cursor? = null
         try {
             cursor = database.rawQuery("select * from $TABLE_NAME", null)
             return mapCursorToPairArray(cursor)
