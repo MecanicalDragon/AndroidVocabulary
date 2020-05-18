@@ -35,6 +35,4 @@ class UpdateActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, Intent())
         finish()
     }
-
-
 }

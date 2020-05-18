@@ -2,11 +2,15 @@ package net.medrag.vocabulary.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.lang.StringBuilder
+import java.util.*
+import kotlin.collections.ArrayList
 
-class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+class Repository(private val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
     private var database: SQLiteDatabase = this.writableDatabase
 
@@ -23,12 +27,18 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
         /**
          * prepare multiple insert queries
          */
-        val queryArray = FILL.split("\n")
+        val identifier =
+            context.resources.getIdentifier("vocabulary", "raw", context.packageName)
+        val input = context.resources.openRawResource(identifier)
+        val scanner = Scanner(input)
         val queries = ArrayList<ContentValues>()
-        for (query in queryArray) {
+        while (scanner.hasNext()) {
+            val nextLine = scanner.nextLine()
+            val split = nextLine.split("||")
             val content = ContentValues()
-            content.put(WORD, query.split("'")[1])
-            content.put(TRANSLATION, query.split("'")[3])
+            content.put(WORD, split[0])
+            content.put(TRANSLATION, split[1])
+            content.put(TAG, "common")
             content.put(STREAK, 0)
             content.put(LEARNED, false)
             queries.add(content)
@@ -69,12 +79,39 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
         return database.insert(TABLE_NAME, null, content)
     }
 
+    fun getRandomSeveralPairs(amount: Int): ArrayList<Pair> {
+        lateinit var cursor: Cursor
+        try {
+            cursor = database.rawQuery("select count($ID) as count from $TABLE_NAME", null)
+            cursor.moveToFirst()
+            val total = cursor.getInt(0)
+            cursor.close()
+            val sb = StringBuilder()
+            for (i in 1..amount) sb.append((Math.random() * total + 1).toInt()).append(",")
+            val array = sb.deleteCharAt(sb.lastIndex).toString()
+            cursor = database.rawQuery(
+                "select * from $TABLE_NAME where ROWID in($array)", null
+            )
+            return mapCursorToPairArray(cursor)
+        } finally {
+            cursor?.close()
+        }
+    }
+
     /**
      * Get all saved words
      */
     fun extractAll(): List<Pair> {
+        lateinit var cursor: Cursor
+        try {
+            cursor = database.rawQuery("select * from $TABLE_NAME", null)
+            return mapCursorToPairArray(cursor)
+        } finally {
+            cursor?.close()
+        }
+    }
 
-        val cursor = database.rawQuery("select * from $TABLE_NAME", null)
+    private fun mapCursorToPairArray(cursor: Cursor): ArrayList<Pair> {
         val result = ArrayList<Pair>()
         val id = cursor.getColumnIndex(ID)
         val word = cursor.getColumnIndex(WORD)
@@ -92,7 +129,6 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
                 )
             )
         }
-        cursor.close()
         return result
     }
 
@@ -112,9 +148,24 @@ class Repository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nu
             Array(1) { pair.id.toString() })
     }
 
-//
+    //
 //    fun delete() {
 //        database.delete(TABLE_NAME, "ID = ?", Array<String>(5) { "1" })
 //    }
 
+    companion object {
+        const val DATABASE = "DATABASE"
+        const val DATABASE_NAME = "MyVocabulary.db"
+        const val TABLE_NAME = "VOCAB"
+        const val ID = "ID"
+        const val WORD = "WORD"
+        const val TRANSLATION = "TRANSLATION"
+        const val STREAK = "STREAK"
+        const val LEARNED = "LEARNED"
+        const val TAG = "TAG"
+
+        const val CREATE =
+            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "$WORD TEXT, $TRANSLATION TEXT, $TAG TEXT, $STREAK INTEGER, $LEARNED NUMERIC);"
+    }
 }

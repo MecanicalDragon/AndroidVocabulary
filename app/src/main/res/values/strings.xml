@@ -8,4 +8,13 @@
     <string name="words">Words:</string>
     <string name="mistakes">Mistakes:</string>
     <string name="update_word">Update previous pair</string>
+    <string name="dump_db">Dump</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="send_notifications_every">Send notifications every…</string>
+    <string name="turn_on_notifications">Update notifications</string>
+    <string name="colon">:</string>
+    <string name="hours">hours</string>
+    <string name="minutes">minutes</string>
+    <string name="send">send</string>
+    <string name="wordsLower">words</string>
 </resources>
