@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notificationWordPairsSet" description="Intent Extra from NotificationBroadcaster to NotificationLandingActivity">notification_word_pairs_set</string>
+    <string name="wordsNotificationAction" description="NotificationBroadcaster action value">net.medrag.vocabulary.words.notification.action</string>
+    <string name="wordsInNotificationAmount" description="Intent extra from NotificationSchedulingActivity to NotificationBroadcaster">wordsInNotificationAmount</string>
+
+    <string name="notificationSchedulingProps" description="Used for fetching SharedPreferences in NotificationSchedulingActivity">net.medrag.vocabulary.notification.scheduling.props</string>
+    <string name="notificationSchedulingPropsWordsAmount">net.medrag.vocabulary.notification.scheduling.props.words</string>
+    <string name="notificationSchedulingPropsPeriod">net.medrag.vocabulary.notification.scheduling.props.period</string>
+
+    <integer name="wordsNotificationPendingIntentRequestCode" description="RequestCode for notification scheduled PendingIntent">128</integer>
+    <integer name="correctAnswersToLearnAmount" description="How many correct answers are required to consider word as learned one">10</integer>
+</resources>

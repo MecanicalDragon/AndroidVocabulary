@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D2E9DF"
+    android:background="@color/colorBg"
     tools:context=".activity.UpdateActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -21,7 +21,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/wilEdit"
-            android:layout_width="350dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:hint="@string/word"
@@ -44,7 +44,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tilEdit"
-            android:layout_width="350dp"
+            android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:hint="@string/translation"
@@ -63,6 +63,7 @@
         android:onClick="updatePair"
         android:text="@string/update_word"
         android:textSize="18sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />

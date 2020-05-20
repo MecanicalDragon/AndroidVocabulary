@@ -1,0 +1,466 @@
+interact||взаимодействовать
+kernel||ядро, зерно, суть
+schedule||планировать
+attempt||попытка
+ensure||гарантировать
+permission||разрешение
+ad hoc||специально для этого
+passion||страсть, азарт
+sane||здравомыслящий
+chunk||кусок, ломоть
+involve||вовлекать
+assume||предполагать
+toil||усердно работать
+evaluate||оценивать
+deception||обман
+expire||терять силу, истекать
+inspire||вдохновлять
+proficiency||умение, опытность
+arcana||тайны
+insight||понимание
+intimidate||запугивать
+investigate||расследовать
+perception||восприятие
+persuasion||убедительность
+sleight of hand||ловкость рук
+stealth||хитрость
+affinity||сродство, близость
+ferret||выискивать, хорек
+due||должное, в связи
+carapace||хитиновый панцирь
+blister||волдырь, пузырь
+former||бывший
+recepient||получатель
+towel||полотенце
+broom||веник
+pan||кастрюля
+hose||шланг
+attitude||отношение
+dispatch||отправка
+persuasive||убедительный
+suspect||подозревать
+accustomed||привыкший
+disaster||катастрофа, бедствие
+get used to||привыкать к
+embed||встраивать
+awful||страшный
+assure||убеждать
+radiance||сияние
+insufferable||невыносимый
+purpose||цель
+plot||сюжет, заговор, график, чертеж
+scale||масштаб, шкала
+estimate||оценка
+exact, accurate, precise||точный
+rural||сельский
+divide||делить
+obtain||получать
+at the same time||заодно
+hinder||мешать
+versatile||разносторонний, гибкий
+foe||противник
+survey||опрос, обозрение
+lane||дорожная полоса, переулок
+substitution||замена
+how many of you||как много вас
+approximately||примерно
+rude||грубый, резкий
+поочереди||one by one, in rotation
+premise||предпосылка
+amusement||развлечение
+assess||оценить
+legislation||законодательство
+negotinations||переговоры
+necessary||необходимый
+measure||мера
+intent||намерение
+familiar||знакомый
+sole||подошва, единственный
+obligatory, mandatory||обязательный
+consent||согласие
+absence, lack||отсутствие, недостача
+valuable||ценный
+bid||заявка
+rely||полагаться
+commitment||обязательство
+sign up||подписаться
+comply||соблюдать
+as for||что касается
+kickoff||начало
+itemized||детализированный
+loan||заем
+carry||нести
+suggest||предлагать
+seldom||редко
+by the time||ко времени
+capable||способный
+approach||подход
+extensive||обширный
+adopt||принять
+robust||крепкий, здравый
+thorough||подробный, тщательный
+poll||голосование
+clarify||прояснить
+currently||в настоящее время
+as far as i understand||насколько я понимаю
+permit||разрешать
+excess||избыток, лишний
+threshold||предел
+distract||отвлекать
+divine||божественный
+reflection||отражение
+furnace||печь
+morass||трясина
+lullaby||колыбельная
+obliteration||уничтожение
+bliss||блаженство
+phenomenon||явление
+attend||присутствовать, посещать
+gather||собирать
+boast||хвастать
+quarrel||ссориться
+hassle||стычка
+lash||плеть
+purge||чистка
+credible||заслуживающий доверия
+chock up||загромождать
+errand||поручение
+agenda||повестка дня
+pronunciation||произношение
+lean||опираться
+entire||весь
+trade-off||компромисс
+take into account||принять к сведению
+meadow||луг
+hike||поход, взбираться
+obscure||безвестный, смутный
+shatter||поколебать
+alias||псевдоним
+convenient||удобный
+figure out||разобраться с
+eager||нетерпеливый
+dedication||самоотверженность, преданность
+diligence||усердие
+perseverance||упорство
+rowing||гребля
+consistently||последовательно
+able||в состоянии
+rough||грубый, черновой
+fold||складка
+perceive||воспринимать
+deaf||глухой
+impair||ухудшать
+magnifier||лупа
+refugee||беженец
+enhance||усиливать, совершенствовать
+opportunity||возможность, случай
+possibility||возможность, вероятность
+according||в соответствии
+behalf||от имени
+although||хотя
+essential||существенный
+convey||передавать, сообщать
+rather||скорее, вернее, довольно
+comprehensible||понятный
+adjust||регулировать
+bypass||обход
+preserve||сохранять
+obsolete||устаревший
+cluttered||загроможденный
+predict||предсказывать, прогнозировать
+appropriate||соответствующий
+awareness||осведомленность
+reliably||надежно
+famine||голод
+determination||определение
+revenue||доход
+ancestor||предок
+descendant||потомок
+sibling||родной брат
+dare||сметь
+contradict||противоречить
+rummage||рыться, копаться
+nonetheless||тем не менее
+by no means||ни в коем случае
+vigilant||бдительный
+cross out||вычеркнуть
+gratitude||благодарность
+bestow||даровать
+cozy||уютный
+urgent||срочный
+up to you||на твое усмотрение
+definitely||определенно
+arrange||организовывать
+marvelous||чудесный
+look forward||ждать с нетерпением
+stick||придерживаться
+ambient||окружающий
+stash||копить
+exceed||превышать
+duration||продолжительность
+precept||заповедь
+behavior||поведение
+harm||вред
+regarding||относительно
+precision||точность
+handle||справляться
+fluent||беглый
+instead||вместо
+vouch||ручаться
+authenticity||подлинность
+instantiate||иллюстрировать примерами
+appoint||назначать встречу
+take offense||обижаться
+vendor||продавец
+bend||изгиб, гнуть
+glance||беглый взгляд
+glow||пылать, жар, свечение
+shaft||стержень, ось, вал
+drool||сочиться, течь, пороть чушь, млеть от счастья, пускать слюни
+fondle||ласкать
+fuzzy||нечеткий, ворсистый
+snout||морда, рыло
+squirm||извиваться
+wiggle||покачиваться, ерзать
+tip||кончик
+vicinity||окрестности
+pervert||извращенец
+nuzzle||прижаться, уткнуться носом
+pounce||внезапно атаковать
+bulge||выпуклость, выступ
+rub||тереться, тереть
+wag||вилять, махать, взмах, шутник
+distinct||отчетливый
+overlap||накладываться, перекрывать
+in a way||в некотором отношении
+mastermind||руководить, управлять
+tense||напряженный
+gratification||удовлетворение, вознаграждение
+sue||предъявлять иск, возбуждать дело
+household||домашнее хозяйство
+literal||буквальный, дословный
+argent||серебристость
+species||вид, порода
+luggage||багаж
+slight||легкий, незначительный
+inebriate||алкоголик
+hangover||похмелье
+patient||терпеливый
+slippery||скользкий
+slope||склон
+likewise||аналогично
+flourish||процветать
+throughout||на протяжении
+deteriorate||ухудшаться
+prone||склонный
+make sense||иметь смысл
+beforehand||заранее
+recognize||распознать
+infer||делать вывод
+caption||подпись
+mention||упомянуть
+cuisine||кухня, стряпня
+weird||странный, непонятный
+overall||в общем и целом
+fine||штрафовать
+frustrate||срывать планы
+shy||застенчивый
+empathetic||чуткий
+generous||щедрый
+compassion||сострадание
+attractive||привлекательный
+odds||шансы
+frankly||откровенно
+nitpick||придираться
+grumbler||ворчун
+disheveled||взъерошенный
+effort||усилие
+treat||угощать
+steer||управлять
+puddle||лужа
+in demand||востребован
+fraud||мошенничество
+far-fetched||надуманный
+fee||плата
+voluntarily||добровольно
+witty||остроумный
+neat||аккуратный
+bribe||взятка, давать взятку
+biased||необъективный
+abroad||за рубежом
+carried away||увлекся
+pivot||стержень
+blink, twinkle||мигать, мерцать
+hesitate||стесняться
+insist||настаивать
+precedence||старшинство, первенство
+nested||вложенный
+participate||участвовать
+postpone||откладывать
+mess||беспорядок
+attentive||внимательный
+intently||пристально
+disgusting||отвратительный
+find out||выяснить
+burst||взрыв, вспышка, лопнуть, разрывать
+sprinkle||посыпать, брызгать
+straw||солома
+log||бревно
+high time||пора
+poke||тыкать, совать
+appreciation||признательность, высокая оценка, уважение
+recently||недавно
+concern||касаться, относиться к
+out of curiosity||чисто из любопытства
+out of||сделанный из
+plausibly||правдоподобно
+stroll||прогулка, гулять
+impression||впечатление
+regardless, despite||несмотря на
+salmon||лосось
+excruciating, tormenting||мучительно
+misuse||злоупотреблять
+imply||подразумевать, означать
+indent||отступ
+notch||паз, выемка, зубец
+regret||сожалеть
+remorse||раскаяние
+pending||в ожидании
+circumstance||обстоятельство
+wallow||валяться, барахтаться, купаться
+perverse||извращенный, ошибочный, упрямый, неправильный
+diversity||разнообразие
+revoke||аннулировать
+whim||каприз
+contemptuous||презрительный, высокомерный, пренебрежительный
+despise, scorn||презирать
+affect||влиять
+proceed||продолжать, действовать
+resort||курорт
+familiarize||ознакомиться
+as a matter of fact||на самом деле
+rob, plunder||грабить, разбойничать
+put out||выводить из себя
+oppress||угнетать, притеснять
+relevant||актуальный
+distinguish||различать
+schedule||расписание
+collaborate||сотрудничать
+retire||уходить в отставку, изымать из использования
+insurance||страховка
+belay||страховать
+disease||болезнь
+justify||оправдывать, обосновывать
+deed||поступок
+accuse||обвинять
+conspire||сговариваться
+abduct||похищать
+heir||наследник, преемник
+ridge||горный хребет
+sewer||сточная труба, коллектор
+slug||слизень
+interrogate||допрашивать
+muffle||заглушать
+torture||пытать, пытка
+utmost||все возможное
+conduct||проводить, поведение
+inclination||наклонность
+cliff||утес
+elaborate||разрабатывать
+leak||утечка, просачиваться
+surreptitious||подпольный
+penultimate||предпоследний
+respectively||соответственно
+foresee||предвидеть
+hedge||живая изгородь
+preface||предисловие
+willingly||охотно
+endorse||одобрять
+gain, obtain, receive, fetch||получать
+allow||допускать
+achieve||достигнуть, добиться
+long ago||давно
+abruptly||резко
+annoy||раздражать, досаждать
+bother||наскучивать, надоедать
+covenant||завет, соглашение, пакт
+staff||персонал, посох
+stuff||материал, вещи, имущество
+keep an eye||приглядеть
+embarrass||смущать
+conscience||совесть
+whose||чей
+whenever||когда угодно
+admire||восхищаться
+confidence||уверенность
+decent||порядочный, приличный
+batch||партия, пакет, серия
+bunch||гроздь, группа, стадо
+pale||бледный
+faint||слабо заметный
+saturate||насыщать
+hence||следовательно
+fence||забор, ограда
+I don't mind||я не против
+ambiguous||двусмысленный
+dangle||болтаться, свисать
+ambiguous||двусмысленный
+kink||причуда, изгиб, чудить
+pat||трепать, похлопывать
+cherish||лелеять
+possess||обладать
+complain||жаловаться
+compatible||совместимый
+favorable||благоприятный
+praise||похвала
+patience||терпение
+awkward||неловкий
+sew||шить
+spit||плевать
+soothe||успокаивать
+claim||требовать, иск
+crop, clip||обрезать
+sue||иск, предъявлять иск
+awkward||неловкий
+tend||как правило
+acquisition||получение
+convince||убеждать
+tend||как правило
+aptitude||способности
+hit the ground running||взяться за дело
+enormous, enormously||огромный, чрезвычайно
+retain||сохранить
+neglect||пренебрегать, пренебрежение
+advance||продвижение
+flaunt||щеголять
+dedicate||посвящать
+harsh||сурово
+severity||строгость
+incline||наклон, наклонять, склонять
+sloppy||небрежный
+eloquent||красноречивый
+groggy||непрочный
+hoof||копыто
+collar||воротник, ошейник
+meantime||тем временем
+chap||глава
+scrutinising||испытующий
+hatch||люк
+adversity||несчастья
+adverse||неблагоприятный
+stare||пялиться, глазеть
+beckon||манить, подзывать
+admit||признавать
+mutiny||бунт
+subdue||подчинять, укрощать
+snapper||окунь
+swirl||водоворот, завихрение
+ignorant||невежественный
+must||заплесневелое что-то
+yank||дергать
+groan||стон, стонать
+haul||буксировать, тащить
+flabbergasted||ошеломленный
+rival||конкурент
+loom||маячить, неясно вырисовываться
+vessel||судно, сосуд

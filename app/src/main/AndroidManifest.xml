@@ -2,16 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.medrag.vocabulary">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".activity.UpdateActivity"/>
+        android:theme="@style/AppTheme">
+
+        <receiver
+            android:name=".service.NotificationBroadcaster"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="@string/wordsNotificationAction" />
+            </intent-filter>
+        </receiver>
+
+<!--        <service-->
+<!--            android:name=".service.NotificationService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
+
+        <activity android:name=".activity.UpdateActivity" />
         <activity android:name=".activity.LearningActivity" />
+        <activity android:name=".activity.NotificationSchedulingActivity" />
+        <activity android:name=".activity.NotificationLandingActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
