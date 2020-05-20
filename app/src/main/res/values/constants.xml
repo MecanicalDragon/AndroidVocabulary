@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="wordsFromNotificationIntent">notification_words_intent</string>
+    <string name="notificationWordPairsSet" description="Intent Extra from NotificationBroadcaster to NotificationLandingActivity">notification_word_pairs_set</string>
+    <string name="wordsNotificationAction" description="NotificationBroadcaster action value">net.medrag.vocabulary.words.notification.action</string>
+    <string name="wordsInNotificationAmount" description="Intent extra from NotificationSchedulingActivity to NotificationBroadcaster">wordsInNotificationAmount</string>
+
+    <string name="notificationSchedulingProps" description="Used for fetching SharedPreferences in NotificationSchedulingActivity">net.medrag.vocabulary.notification.scheduling.props</string>
+    <string name="notificationSchedulingPropsWordsAmount">net.medrag.vocabulary.notification.scheduling.props.words</string>
+    <string name="notificationSchedulingPropsPeriod">net.medrag.vocabulary.notification.scheduling.props.period</string>
+
+    <integer name="wordsNotificationPendingIntentRequestCode" description="RequestCode for notification scheduled PendingIntent">128</integer>
 </resources>

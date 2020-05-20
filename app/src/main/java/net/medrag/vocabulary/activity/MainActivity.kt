@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun toNotificationSettings(@Suppress("UNUSED_PARAMETER") view: View) =
-        startActivity(Intent(this, NotificationActivity::class.java))
+        startActivity(Intent(this, NotificationSchedulingActivity::class.java))
 
     fun learn(@Suppress("UNUSED_PARAMETER") view: View) {
         wilEdit.text?.clear()
