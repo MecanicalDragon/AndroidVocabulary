@@ -61,7 +61,7 @@ class NotificationBroadcaster : BroadcastReceiver() {
             0
         )
         return NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_puzzle)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setContentTitle("Do you remember these words?")
             .setContentText(pairs.map { it.trans }.reduce { acc, string -> "$acc | $string" })

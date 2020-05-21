@@ -37,7 +37,7 @@ class PairAdapter(context: Context, private val wordList: ArrayList<Pair>) : Bas
         val pair = getItem(position)
 
         if (view != null) {
-            (view.findViewById(R.id.wordInList) as TextView).text = pair.word
+            (view.findViewById(R.id.wordInList) as TextView).text = ""
             (view.findViewById(R.id.transInList) as TextView).text = pair.trans
             val progress = defineProgressBar(view, pair)
             defineCheckbox(view, position, progress)
@@ -54,19 +54,20 @@ class PairAdapter(context: Context, private val wordList: ArrayList<Pair>) : Bas
     }
 
     private fun defineCheckbox(view: View, position: Int, progress: ProgressBar) {
+        val wordTextView = view.findViewById(R.id.wordInList) as TextView
         val checkBox = view.findViewById(R.id.remembered) as CheckBox
         checkBox.tag = position
         checkBox.isChecked = false
         checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
             val item = getItem(buttonView.tag as Int)
             if (isChecked) {
-                item.streak++
+                wordTextView.text = item.word
                 item.learned = true
-                progress.progress = ++progress.progress
+                progress.progress = ++item.streak
             } else {
-                item.streak--
+                wordTextView.text = ""
                 item.learned = false
-                progress.progress = --progress.progress
+                progress.progress = --item.streak
             }
         }
     }

@@ -8,6 +8,7 @@
     <string name="words">Words:</string>
     <string name="mistakes">Mistakes:</string>
     <string name="update_word">Update previous pair</string>
+    <string name="update">Update</string>
     <string name="dump_db">Dump</string>
     <string name="notification_settings">Notification Settings</string>
     <string name="send_notifications_every">Send notifications every…</string>

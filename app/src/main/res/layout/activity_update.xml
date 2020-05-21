@@ -21,10 +21,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/wilEdit"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:hint="@string/word"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -44,10 +42,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tilEdit"
-            android:layout_width="311dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:hint="@string/translation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -61,7 +57,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_green"
         android:onClick="updatePair"
-        android:text="@string/update_word"
+        android:text="@string/update"
         android:textSize="18sp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
