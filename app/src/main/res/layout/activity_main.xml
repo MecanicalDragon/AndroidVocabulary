@@ -7,7 +7,7 @@
     android:background="@color/colorBg"
     tools:context=".activity.MainActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:id="@+id/wordInputLayout"
         android:layout_width="0dp"
         android:layout_height="54dp"
@@ -15,21 +15,44 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/wilEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/word"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wordInputLayoutInner"
+            android:layout_width="250dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wilEdit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/word" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/pasteWordEn"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/paste_button"
+            android:drawableBottom="@drawable/ic_paste"
+            android:onClick="pasteFromClipboardEn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/transInputLayout"
         android:layout_width="0dp"
         android:layout_height="54dp"
@@ -37,19 +60,45 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wordInputLayout">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tilEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/translation"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/transInputLayoutInner"
+            android:layout_width="250dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tilEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/translation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/pasteWordRu"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/paste_button"
+            android:drawableBottom="@drawable/ic_paste"
+            android:onClick="pasteFromClipboardRu"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="" />
+    </LinearLayout>
 
     <!--    Add new word button-->
     <Button
