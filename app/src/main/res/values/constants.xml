@@ -3,6 +3,8 @@
     <string name="notificationWordPairsSet" description="Intent Extra from NotificationBroadcaster to NotificationLandingActivity">notification_word_pairs_set</string>
     <string name="wordsNotificationAction" description="NotificationBroadcaster action value">net.medrag.vocabulary.words.notification.action</string>
     <string name="wordsInNotificationAmount" description="Intent extra from NotificationSchedulingActivity to NotificationBroadcaster">wordsInNotificationAmount</string>
+    <string name="yandexApiKey" description="Key for yandex translator api">trnsl.1.1.20200522T225534Z.74169bcd6b4a4fcf.04a0d586ddb10facfdab32948eff3ab9b07c7f67</string>
+    <string name="yandexApiRequestUri" description="URI for yandex translator api">https://translate.yandex.net/api/v1.5/tr.json/translate</string>
 
     <string name="notificationSchedulingProps" description="Used for fetching SharedPreferences in NotificationSchedulingActivity">net.medrag.vocabulary.notification.scheduling.props</string>
     <string name="notificationSchedulingPropsWordsAmount">net.medrag.vocabulary.notification.scheduling.props.words</string>

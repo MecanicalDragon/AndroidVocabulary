@@ -25,14 +25,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/wordInputLayoutInner"
-            android:layout_width="250dp"
+            android:layout_width="285dp"
             android:layout_height="54dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            android:layout_marginEnd="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/wilEdit"
@@ -70,23 +67,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/transInputLayoutInner"
-            android:layout_width="250dp"
+            android:layout_width="285dp"
             android:layout_height="54dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            android:layout_marginEnd="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tilEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/translation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:hint="@string/translation"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -103,15 +94,16 @@
     <!--    Add new word button-->
     <Button
         android:id="@+id/addWord"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_green"
+        android:background="@drawable/rounded_primary"
         android:onClick="addToVoc"
         android:text="@string/add_word"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
 
@@ -130,7 +122,7 @@
 
     <Button
         android:id="@+id/dumpDb"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:background="@drawable/rounded_gray"
@@ -152,5 +144,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dumpDb"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/askYandex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_yellow"
+        android:onClick="askYandex"
+        android:text="@string/askYandex"
+        android:textColor="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addWord"
+        app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

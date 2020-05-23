@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_green"
+        android:background="@drawable/rounded_primary"
         android:onClick="updatePair"
         android:text="@string/update"
         android:textSize="18sp"
