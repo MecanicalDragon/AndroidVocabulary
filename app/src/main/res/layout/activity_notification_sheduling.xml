@@ -40,7 +40,7 @@
         android:id="@+id/colon"
         android:layout_width="10dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="42dp"
         android:text="@string/colon"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sendNotievery" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/miutesInputLayout"
+        android:id="@+id/minutesInputLayout"
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:layout_marginTop="23dp"
@@ -81,13 +81,13 @@
         android:id="@+id/updateNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/rounded_primary"
         android:onClick="switchNotifications"
         android:text="@string/turn_on_notifications"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pairsNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/dash" />
 
     <TextView
         android:id="@+id/beforeNumber"
@@ -109,6 +109,66 @@
         android:text="@string/wordsLower"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/pairsNumber"
-        app:layout_constraintTop_toBottomOf="@+id/miutesInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/minutesInputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/silentHoursSince"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:ems="5"
+        android:inputType="time"
+        app:layout_constraintEnd_toStartOf="@+id/dash"
+        app:layout_constraintTop_toBottomOf="@+id/silentHours">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/silentHoursSinceInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/since"
+            android:inputType="time"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/dash"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/silentHours" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/silentHoursTill"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:ems="5"
+        android:inputType="time"
+        app:layout_constraintStart_toEndOf="@+id/dash"
+        app:layout_constraintTop_toBottomOf="@+id/silentHours">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/silentHoursTillInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/till"
+            android:inputType="time"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/silentHours"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:inputType="textPersonName"
+        android:text="Silent hours:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pairsNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

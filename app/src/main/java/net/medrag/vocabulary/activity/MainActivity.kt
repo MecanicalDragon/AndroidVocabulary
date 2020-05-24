@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         database = Repository(this)
         key = resources.getString(R.string.yandexApiKey)
         url = resources.getString(R.string.yandexApiRequestUri)
+        yandexLink.movementMethod = LinkMovementMethod.getInstance()
+        switchYandexVisibility(false)
     }
 
     fun addToVoc(@Suppress("UNUSED_PARAMETER") view: View) {
@@ -51,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         } else if (database.addWord(wilEdit.text.toString(), tilEdit.text.toString()) > 0) {
             wilEdit.text?.clear()
             tilEdit.text?.clear()
+            switchYandexVisibility(false)
             Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show()
@@ -95,6 +99,7 @@ class MainActivity : AppCompatActivity() {
                             Log.w(MAIN_ACTIVITY, "Unexpected response form Yandex: $lang")
                         }
                     }
+                    switchYandexVisibility(true)
                 } else {
                     Log.e(MAIN_ACTIVITY, "Yandex request failed: $data")
                 }
@@ -164,6 +169,11 @@ class MainActivity : AppCompatActivity() {
         tilEdit.clearFocus()
         wilEdit.clearFocus()
         startActivity(Intent(this, LearningActivity::class.java))
+    }
+
+    private fun switchYandexVisibility(show:Boolean){
+        yandexLicenseText.visibility = if (show) View.VISIBLE else View.GONE
+        yandexLink.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     companion object {

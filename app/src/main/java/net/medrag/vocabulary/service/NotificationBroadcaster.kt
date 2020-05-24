@@ -13,6 +13,7 @@ import net.medrag.vocabulary.R
 import net.medrag.vocabulary.activity.NotificationLandingActivity
 import net.medrag.vocabulary.db.Pair
 import net.medrag.vocabulary.db.Repository
+import java.time.LocalTime
 
 class NotificationBroadcaster : BroadcastReceiver() {
 
@@ -29,7 +30,10 @@ class NotificationBroadcaster : BroadcastReceiver() {
             Log.e(NOTIFICATION, "Actual: ${incoming.action}")
             return
         }
-
+        if (silentHours(context)) {
+            Log.i(NOTIFICATION, "But also it's silent period now...")
+            return
+        }
         createChannel(context)
         val pairs = Repository(context).getRandomSeveralPairs(
             incoming.extras?.getInt(
@@ -47,6 +51,27 @@ class NotificationBroadcaster : BroadcastReceiver() {
         val mBuilder = buildNotificationCompat(context, intent, pairs)
         NotificationManagerCompat.from(context)
             .notify((Math.random() * Integer.MAX_VALUE).toInt(), mBuilder.build())
+    }
+
+    private fun silentHours(context: Context): Boolean {
+        val sharedPref = context.getSharedPreferences(
+            context.getString(R.string.notificationSchedulingProps),
+            Context.MODE_PRIVATE
+        )
+        val silentSince = sharedPref.getLong(
+            context.getString(R.string.notificationSchedulingPropsSilentSince),
+            context.resources.getInteger(R.integer.notificationSchedulingPropsSilentSinceDefaultValue)
+                .toLong()
+        )
+        val silentTill = sharedPref.getLong(
+            context.getString(R.string.notificationSchedulingPropsSilentTill),
+            context.resources.getInteger(R.integer.notificationSchedulingPropsSilentTillDefaultValue)
+                .toLong()
+        )
+        val now = LocalTime.now().toSecondOfDay()
+        return if (silentSince < silentTill)
+            now in silentSince until silentTill
+        else now !in silentSince until silentTill
     }
 
     private fun buildNotificationCompat(

@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import net.medrag.vocabulary.R
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
@@ -79,22 +80,32 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         return database.insert(TABLE_NAME, null, content)
     }
 
+    /**
+     * Retrieve random not learned yet words.
+     */
     fun getRandomSeveralPairs(amount: Int): ArrayList<Pair> {
         var total = 1
-        (database.rawQuery("select count($ID) as count from $TABLE_NAME", null)).use {
+        val learnedMarker = context.resources.getInteger(R.integer.correctAnswersToLearnAmount)
+        (database.rawQuery(
+            "select count($ID) as count from $TABLE_NAME where $STREAK < ?",
+            arrayOf(learnedMarker.toString())
+        )).use {
             it.moveToFirst()
             total = it.getInt(0)
         }
         val sb = StringBuilder()
         for (i in 1..amount) sb.append((Math.random() * total + 1).toInt()).append(",")
         val array = sb.deleteCharAt(sb.lastIndex).toString()
-        (database.rawQuery("select * from $TABLE_NAME where ROWID in($array)", null)).use {
+        (database.rawQuery(
+            "select * from $TABLE_NAME where $STREAK < ? and ROWID in($array)",
+            arrayOf(learnedMarker.toString())
+        )).use {
             return mapCursorToPairArray(it)
         }
     }
 
     fun updateStreak(pairs: List<Pair>) {
-        val inVar = pairs.map { it.id.toString() }.reduce{acc, s -> "$acc,$s"}
+        val inVar = pairs.map { it.id.toString() }.reduce { acc, s -> "$acc,$s" }
         val sql = "update $TABLE_NAME set $STREAK = $STREAK + 1 where $ID in ($inVar)"
         Log.i(DATABASE, "Executing SQL: $sql")
         database.execSQL(sql)

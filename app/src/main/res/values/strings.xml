@@ -16,9 +16,14 @@
     <string name="colon">:</string>
     <string name="hours">hours</string>
     <string name="minutes">minutes</string>
+    <string name="since">since</string>
+    <string name="dash">-</string>
+    <string name="till">till</string>
     <string name="send">send</string>
     <string name="wordsLower">words</string>
     <string name="saveProgress">Save Progress</string>
     <string name="progressSaved">Progress has been saved!</string>
     <string name="askYandex">Ask Yandex</string>
+    <string name="yandexLicenseText">Переведено сервисом «Яндекс.Переводчик»</string>
+    <string name="yandexLink"><a href="http://translate.yandex.ru">http://translate.yandex.ru</a></string>
 </resources>

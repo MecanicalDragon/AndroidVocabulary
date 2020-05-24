@@ -45,8 +45,8 @@
             android:background="@drawable/paste_button"
             android:drawableBottom="@drawable/ic_paste"
             android:onClick="pasteFromClipboardEn"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="" />
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,7 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded"
         android:gravity="end"
@@ -77,7 +77,7 @@
                 android:id="@+id/tilEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/translation"/>
+                android:hint="@string/translation" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -87,8 +87,8 @@
             android:background="@drawable/paste_button"
             android:drawableBottom="@drawable/ic_paste"
             android:onClick="pasteFromClipboardRu"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="" />
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 
     <!--    Add new word button-->
@@ -96,14 +96,13 @@
         android:id="@+id/addWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_primary"
         android:onClick="addToVoc"
         android:text="@string/add_word"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/askYandex"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
 
@@ -130,12 +129,11 @@
         android:text="@string/dump_db"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
         app:layout_constraintStart_toEndOf="@+id/toNotiSettings" />
 
     <Button
         android:id="@+id/toNotiSettings"
-        android:layout_width="180dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:background="@drawable/rounded_gray"
@@ -150,7 +148,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_yellow"
         android:onClick="askYandex"
         android:text="@string/askYandex"
@@ -158,5 +155,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addWord"
         app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
+
+    <TextView
+        android:id="@+id/yandexLicenseText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yandexLicenseText"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/yandexLink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wordInputLayout" />
+
+    <TextView
+        android:id="@+id/yandexLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yandexLink"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/transInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yandexLicenseText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

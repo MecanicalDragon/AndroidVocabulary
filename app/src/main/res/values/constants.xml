@@ -9,7 +9,11 @@
     <string name="notificationSchedulingProps" description="Used for fetching SharedPreferences in NotificationSchedulingActivity">net.medrag.vocabulary.notification.scheduling.props</string>
     <string name="notificationSchedulingPropsWordsAmount">net.medrag.vocabulary.notification.scheduling.props.words</string>
     <string name="notificationSchedulingPropsPeriod">net.medrag.vocabulary.notification.scheduling.props.period</string>
+    <string name="notificationSchedulingPropsSilentSince">net.medrag.vocabulary.notification.scheduling.props.silent.since</string>
+    <string name="notificationSchedulingPropsSilentTill">net.medrag.vocabulary.notification.scheduling.props.silent.till</string>
 
+    <integer name="notificationSchedulingPropsSilentSinceDefaultValue">79200</integer>
+    <integer name="notificationSchedulingPropsSilentTillDefaultValue">36000</integer>
     <integer name="wordsNotificationPendingIntentRequestCode" description="RequestCode for notification scheduled PendingIntent">128</integer>
     <integer name="correctAnswersToLearnAmount" description="How many correct answers are required to consider word as learned one">10</integer>
 </resources>
