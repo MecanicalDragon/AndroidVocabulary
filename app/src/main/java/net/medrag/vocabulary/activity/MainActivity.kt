@@ -73,6 +73,62 @@ class MainActivity : AppCompatActivity() {
         yandexRequest(text, mode)
     }
 
+    fun dump(@Suppress("UNUSED_PARAMETER") view: View) {
+        val dump: List<String> =
+            database.extractAll().map { ReducedPair(it.trans, it.word) }.map { it.toString() }
+                .toList()
+        // Check if env is accessible
+        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+            val externalFilesDir = getExternalFilesDir(null)
+            val file = File(externalFilesDir, "DUMP_BD_FILE.TXT")
+            if (file.exists()) Files.delete(file.toPath())
+            Files.createFile(file.toPath())
+            Files.write(file.toPath(), dump)
+            showToast("Database has been dumped!")
+        }
+    }
+
+    fun toNotificationSettings(@Suppress("UNUSED_PARAMETER") view: View) =
+        startActivity(Intent(this, NotificationSchedulingActivity::class.java))
+
+    fun learn(@Suppress("UNUSED_PARAMETER") view: View) {
+        wilEdit.text?.clear()
+        tilEdit.text?.clear()
+        tilEdit.clearFocus()
+        wilEdit.clearFocus()
+        startActivity(Intent(this, LearningActivity::class.java))
+    }
+
+    fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(wilEdit)
+    fun pasteFromClipboardRu(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(tilEdit)
+
+    private fun pasteFromClipboard(inputField: TextInputEditText) {
+        val mode = when (inputField) {
+            wilEdit -> EN_RU
+            tilEdit -> RU_EN
+            else -> {
+                Log.e(MAIN_ACTIVITY, "You've passed invalid field in the paste function")
+                showToast("WTF?! You've did smth, that breaks normal workflow of the app.")
+                return
+            }
+        }
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        if (clipboard.hasPrimaryClip()) {
+            val clip = clipboard.primaryClipDescription
+            if (clip?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true
+                || clip?.hasMimeType(MIMETYPE_TEXT_HTML) == true
+            ) {
+                val text = clipboard.primaryClip?.getItemAt(0)?.text
+                if (text.isNullOrBlank()) {
+                    showToast("Text in clipboard is blank!")
+                } else {
+                    inputField.setText(text)
+                    yandexRequest(text.toString(), mode)
+                }
+            } else showToast("Not a text in the clipboard!")
+        } else showToast("The clipboard is empty!")
+    }
+
     private fun yandexRequest(textOut: String, mode: String) {
         if (textOut.isBlank()) {
             Log.e(MAIN_ACTIVITY, "Passed text is blank. There will be no request to Yandex.")
@@ -109,71 +165,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(wilEdit)
-    fun pasteFromClipboardRu(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(tilEdit)
-
-    private fun pasteFromClipboard(inputField: TextInputEditText) {
-        val mode = when (inputField) {
-            wilEdit -> EN_RU
-            tilEdit -> RU_EN
-            else -> {
-                Log.e(MAIN_ACTIVITY, "You've passed invalid field in the paste function")
-                showToast("WTF?! You've did smth, that breaks normal workflow of the app.")
-                return
-            }
-        }
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        if (clipboard.hasPrimaryClip()) {
-            val clip = clipboard.primaryClipDescription
-            if (clip?.hasMimeType(MIMETYPE_TEXT_PLAIN) == true
-                || clip?.hasMimeType(MIMETYPE_TEXT_HTML) == true
-            ) {
-                val text = clipboard.primaryClip?.getItemAt(0)?.text
-                if (text.isNullOrBlank()) {
-                    showToast("Text in clipboard is blank!")
-                } else {
-                    inputField.setText(text)
-                    yandexRequest(text.toString(), mode)
-                }
-            } else showToast("Not a text in the clipboard!")
-        } else showToast("The clipboard is empty!")
-    }
-
-    fun dump(@Suppress("UNUSED_PARAMETER") view: View) {
-        val dump: List<String> =
-            database.extractAll().map { ReducedPair(it.trans, it.word) }.map { it.toString() }
-                .toList()
-        // Check if env is accessible
-        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            val externalFilesDir = getExternalFilesDir(null)
-            val file = File(externalFilesDir, "DUMP_BD_FILE.TXT")
-            if (file.exists()) Files.delete(file.toPath())
-            Files.createFile(file.toPath())
-            Files.write(file.toPath(), dump)
-            showToast("Database has been dumped!")
-        }
-    }
-
-    private fun showToast(msg: String) =
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).apply {
-            setGravity(Gravity.TOP, 0, dumpDb.top - 170)
-            show()
-        }
-
-    fun toNotificationSettings(@Suppress("UNUSED_PARAMETER") view: View) =
-        startActivity(Intent(this, NotificationSchedulingActivity::class.java))
-
-    fun learn(@Suppress("UNUSED_PARAMETER") view: View) {
-        wilEdit.text?.clear()
-        tilEdit.text?.clear()
-        tilEdit.clearFocus()
-        wilEdit.clearFocus()
-        startActivity(Intent(this, LearningActivity::class.java))
-    }
-
-    private fun switchYandexVisibility(show:Boolean){
+    private fun switchYandexVisibility(show: Boolean) {
         yandexLicenseText.visibility = if (show) View.VISIBLE else View.GONE
         yandexLink.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).apply {
+        setGravity(Gravity.TOP, 0, dumpDb.top - 170)
+        show()
     }
 
     companion object {

@@ -26,4 +26,8 @@
     <string name="askYandex">Ask Yandex</string>
     <string name="yandexLicenseText">Переведено сервисом «Яндекс.Переводчик»</string>
     <string name="yandexLink"><a href="http://translate.yandex.ru">http://translate.yandex.ru</a></string>
+    <string name="Get100">Get 100</string>
+    <string name="Get50">Get 50</string>
+    <string name="Get25">Get 25</string>
+    <string name="Get10">Get 10</string>
 </resources>

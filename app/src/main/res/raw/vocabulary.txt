@@ -11,7 +11,7 @@ chunk||кусок, ломоть
 involve||вовлекать
 assume||предполагать
 toil||усердно работать
-evaluate||оценивать
+evaluate, estimate, asses||оценивать
 deception||обман
 expire||терять силу, истекать
 inspire||вдохновлять
@@ -50,7 +50,6 @@ insufferable||невыносимый
 purpose||цель
 plot||сюжет, заговор, график, чертеж
 scale||масштаб, шкала
-estimate||оценка
 exact, accurate, precise||точный
 rural||сельский
 divide||делить
@@ -68,9 +67,8 @@ rude||грубый, резкий
 поочереди||one by one, in rotation
 premise||предпосылка
 amusement||развлечение
-assess||оценить
 legislation||законодательство
-negotinations||переговоры
+negotiations||переговоры
 necessary||необходимый
 measure||мера
 intent||намерение

@@ -8,6 +8,7 @@ import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,15 +18,14 @@ import net.medrag.vocabulary.db.Pair
 import net.medrag.vocabulary.db.Repository
 import java.util.ArrayList
 
+//TODO: fix this shit
 class LearningActivity : AppCompatActivity() {
 
-    private val UPDATE_CODE = 0
-    private val TOAST_OFFSET = 170
     private lateinit var database: Repository
     private lateinit var voc: List<Pair>
     private var iterator = 0
-    private var sum = 0
-    private var m = 0
+    private var mistakesCounter = 0
+    private var challenged = false
 
     /**
      * Create new activity
@@ -35,7 +35,6 @@ class LearningActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_learning)
         database = Repository(this)
-        voc = database.extractAll().shuffled()
 
         /**
          * Submit on enter
@@ -46,27 +45,25 @@ class LearningActivity : AppCompatActivity() {
                 return@setOnEditorActionListener true
             } else return@setOnEditorActionListener false
         }
+    }
 
-        /**
-         * Useless here
-         */
-//        tiEdit.setOnFocusChangeListener { _, focus ->
-//            if (focus) tiEdit.hint = voc[iterator].word else tiEdit.hint = ""
-//            return@setOnFocusChangeListener
-//        }
-
-        /**
-         * Init text views
-         */
-        if (voc.isNotEmpty()) {
-            word.text = voc[iterator].word
-            words.text = "$iterator/${voc.size}"
-            mistakes.text = m.toString()
+    override fun onResume() {
+        super.onResume()
+        if (challenged) {
+            getLayout.visibility = View.GONE
+            if (iterator != 0 && voc.size == iterator) {
+                (check as Button).text = "Finish"
+                check.setOnClickListener {
+                    learningView.visibility = View.GONE
+                    challenged = false
+                    tiEdit.text?.clear()
+                    getLayout.visibility = View.VISIBLE
+                }
+            }
+            learningView.visibility = View.VISIBLE
         } else {
-            word.text = "Your vocabulary is empty!"
-            tiEdit.visibility = View.INVISIBLE
-            transInput.visibility = View.INVISIBLE
-            check.visibility = View.INVISIBLE
+            learningView.visibility = View.GONE
+            getLayout.visibility = View.VISIBLE
         }
     }
 
@@ -76,43 +73,77 @@ class LearningActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun checkWord(@Suppress("UNUSED_PARAMETER") view: View) {
 
-        /**
-         * If answer is incorrect
-         */
-        if (!tiEdit.text.toString().equals(voc[iterator++].trans)) {
+        if (tiEdit.text.toString() != voc[iterator].word) {
             AlertDialog.Builder(this)
                 .setTitle("Wrong!")
-                .setMessage("${voc[iterator - 1].word}\n\n${voc[iterator - 1].trans}")
+                .setMessage("${voc[iterator].word}\n\n${voc[iterator].trans}")
                 .create()
                 .show()
-            m++
-            mistakes.text = m.toString()
-
-            /**
-             * If answer is correct
-             */
+            mistakesCounter++
+            mistakes.text = mistakesCounter.toString()
         } else {
+            voc[iterator].learned = true
             val makeText = Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT)
             makeText.setGravity(Gravity.TOP, 0, percentage.bottom + TOAST_OFFSET)
             makeText.show()
         }
 
-        /**
-         * Get new vocabulary if previous one is over
-         */
-        if (iterator == voc.size) {
-            voc = database.extractAll().shuffled()
-            iterator = 0
-            sum += voc.size
+        if (++iterator == voc.size) {
+            val learned = voc.filter { it.learned }.toList()
+            database.updateStreak(learned)
+            AlertDialog.Builder(this)
+                .setTitle("Congratulations!")
+                .setMessage(
+                    "You've finished the challenge, translating correctly ${learned.size} words of ${voc.size}. " +
+                            "In later versions you'll receive a medal for this achievement, but for now just take our endorsement."
+                )
+                .create()
+                .show()
+            word.text = "Congratulations!"
+            (check as Button).text = "Finish"
+            check.setOnClickListener {
+                learningView.visibility = View.GONE
+                tiEdit.text?.clear()
+                getLayout.visibility = View.VISIBLE
+            }
+        } else {
+            word.text = voc[iterator].trans
         }
 
         /**
          * Fill text views
          */
-        words.text = "${iterator + sum}/${voc.size + sum}"
-        percentage.text = "${100 - m * 100 / (iterator + sum)}%"
-        word.text = voc[iterator].word
+        words.text = "${iterator}/${voc.size}"
+        percentage.text = "${100 - mistakesCounter * 100 / iterator}%"
         tiEdit.text?.clear()
+    }
+
+    fun startChallenge(view: View) {
+        val amount = when ((view as Button).text) {
+            resources.getString(R.string.Get10) -> 10
+            resources.getString(R.string.Get25) -> 25
+            resources.getString(R.string.Get50) -> 50
+            resources.getString(R.string.Get100) -> 100
+            else -> 10
+        }
+        getLayout.visibility = View.GONE
+        voc = database.getWorstLearnedPairs(amount)
+        iterator = 0
+        mistakesCounter = 0
+        if (voc.isNotEmpty()) {
+            word.text = voc[iterator].trans
+            words.text = "$iterator/${voc.size}"
+            mistakes.text = mistakesCounter.toString()
+        } else {
+            word.text = "Your vocabulary is empty!"
+            tiEdit.visibility = View.INVISIBLE
+            transInput.visibility = View.INVISIBLE
+            check.visibility = View.INVISIBLE
+        }
+        challenged = true
+        (check as Button).text = "Check"
+        check.setOnClickListener { checkWord(it) }
+        learningView.visibility = View.VISIBLE
     }
 
     /**
@@ -151,8 +182,9 @@ class LearningActivity : AppCompatActivity() {
         outState.putString("percentage", percentage.text.toString())
         outState.putString("answer", tiEdit.text.toString())
         outState.putInt("iterator", iterator)
-        outState.putInt("sum", sum)
-        outState.putInt("mistakes", m)
+        outState.putInt("mistakes", mistakesCounter)
+        outState.putBoolean("challenged", challenged)
+        outState.putString("currentWord", word.text.toString())
         super.onSaveInstanceState(outState)
     }
 
@@ -165,11 +197,15 @@ class LearningActivity : AppCompatActivity() {
         words.text = savedInstanceState.getString("words")
         percentage.text = savedInstanceState.getString("percentage")
         tiEdit.setText(savedInstanceState.getString("answer"))
-        m = savedInstanceState.getInt("mistakes")
-        mistakes.text = m.toString()
+        mistakesCounter = savedInstanceState.getInt("mistakes")
+        challenged = savedInstanceState.getBoolean("challenged")
+        mistakes.text = mistakesCounter.toString()
         iterator = savedInstanceState.getInt("iterator")
-        sum = savedInstanceState.getInt("sum")
-        word.text = voc[iterator].word
+        word.text = savedInstanceState.getString("currentWord")
     }
 
+    companion object {
+        private const val UPDATE_CODE = 0
+        private const val TOAST_OFFSET = 170
+    }
 }

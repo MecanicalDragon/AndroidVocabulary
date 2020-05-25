@@ -69,9 +69,11 @@ class NotificationBroadcaster : BroadcastReceiver() {
                 .toLong()
         )
         val now = LocalTime.now().toSecondOfDay()
-        return if (silentSince < silentTill)
+        return if (silentSince < silentTill) {
             now in silentSince until silentTill
-        else now !in silentSince until silentTill
+        } else {
+            now !in silentTill until silentSince
+        }
     }
 
     private fun buildNotificationCompat(
