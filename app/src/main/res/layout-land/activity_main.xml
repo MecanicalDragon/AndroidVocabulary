@@ -1,181 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBg"
-    tools:context=".activity.MainActivity">
+    android:orientation="horizontal"
+    tools:context=".activity.MainActivity"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp">
 
-    <LinearLayout
-        android:id="@+id/wordInputLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/splittedButtonsLayout"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/wordInputLayoutInner"
-            android:layout_width="285dp"
+        <Button
+            android:id="@+id/addWord"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_primary"
+            android:onClick="addToVoc"
+            android:text="@string/add_word"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/learn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded"
+            android:onClick="learn"
+            android:text="@string/learn"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/askYandex" />
+
+        <Button
+            android:id="@+id/dumpDb"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_gray"
+            android:onClick="dump"
+            android:text="@string/dump_db"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toNotiSettings" />
+
+        <Button
+            android:id="@+id/toNotiSettings"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_gray"
+            android:onClick="toNotificationSettings"
+            android:text="@string/notification_settings"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/learn" />
+
+        <Button
+            android:id="@+id/askYandex"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_yellow"
+            android:onClick="askYandex"
+            android:text="@string/askYandex"
+            android:textColor="#FF0000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addWord" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/splittedInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/wordInputLayout"
+            android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/wilEdit"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wordInputLayoutInner"
+                android:layout_width="285dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wilEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/word" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/pasteWordEn"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:hint="@string/word" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/paste_button"
+                android:drawableBottom="@drawable/ic_paste"
+                android:onClick="pasteFromClipboardEn"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/pasteWordEn"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/paste_button"
-            android:drawableBottom="@drawable/ic_paste"
-            android:onClick="pasteFromClipboardEn"
-            android:text=""
-            app:layout_constraintEnd_toEndOf="parent" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/yandexLicenseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yandexLicenseText"
+            android:textColor="#FF0000"
+            app:layout_constraintBottom_toTopOf="@+id/yandexLink"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wordInputLayout" />
 
-    <LinearLayout
-        android:id="@+id/transInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wordInputLayout">
+        <TextView
+            android:id="@+id/yandexLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yandexLink"
+            android:textColor="#FF0000"
+            app:layout_constraintBottom_toTopOf="@+id/transInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yandexLicenseText" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/transInputLayoutInner"
-            android:layout_width="285dp"
+        <LinearLayout
+            android:id="@+id/transInputLayout"
+            android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wordInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tilEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/translation" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/transInputLayoutInner"
+                android:layout_width="285dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp">
 
-        <Button
-            android:id="@+id/pasteWordRu"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/paste_button"
-            android:drawableBottom="@drawable/ic_paste"
-            android:onClick="pasteFromClipboardRu"
-            android:text=""
-            app:layout_constraintEnd_toEndOf="parent" />
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tilEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/translation" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Add new word button-->
-    <Button
-        android:id="@+id/addWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_primary"
-        android:onClick="addToVoc"
-        android:text="@string/add_word"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/askYandex"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
+            <Button
+                android:id="@+id/pasteWordRu"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/paste_button"
+                android:drawableBottom="@drawable/ic_paste"
+                android:onClick="pasteFromClipboardRu"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/learn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/rounded"
-        android:onClick="learn"
-        android:text="@string/learn"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addWord" />
-
-    <Button
-        android:id="@+id/dumpDb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/rounded_gray"
-        android:onClick="dump"
-        android:text="@string/dump_db"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toNotiSettings" />
-
-    <Button
-        android:id="@+id/toNotiSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/rounded_gray"
-        android:onClick="toNotificationSettings"
-        android:text="@string/notification_settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dumpDb"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/askYandex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_yellow"
-        android:onClick="askYandex"
-        android:text="@string/askYandex"
-        android:textColor="#FF0000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addWord"
-        app:layout_constraintTop_toBottomOf="@+id/transInputLayout" />
-
-    <TextView
-        android:id="@+id/yandexLicenseText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/yandexLicenseText"
-        android:textColor="#FF0000"
-        app:layout_constraintBottom_toTopOf="@+id/yandexLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wordInputLayout" />
-
-    <TextView
-        android:id="@+id/yandexLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/yandexLink"
-        android:textColor="#FF0000"
-        app:layout_constraintBottom_toTopOf="@+id/transInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yandexLicenseText" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
