@@ -4,26 +4,23 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_learning.*
 import net.medrag.vocabulary.R
-import net.medrag.vocabulary.db.Pair
 import net.medrag.vocabulary.db.Repository
-import java.util.*
+import net.medrag.vocabulary.model.LearningModel
 
 class LearningActivity : AppCompatActivity() {
 
     private lateinit var database: Repository
-    private lateinit var voc: List<Pair>
-    private var iterator = 0
-    private var mistakesCounter = 0
+    private val model: LearningModel by viewModels()
 
     /**
      * Create new activity
@@ -45,14 +42,14 @@ class LearningActivity : AppCompatActivity() {
         }
 
         // Retrieve vocabulary with specified size
-        val amount = intent?.extras?.getInt(resources.getString(R.string.pickAmount)) ?: 10
-        voc = database.getWorstLearnedPairs(amount)
-        iterator = 0
-        mistakesCounter = 0
-        if (voc.isNotEmpty()) {
-            word.text = voc[iterator].trans
-            words.text = "$iterator/${voc.size}"
-            mistakes.text = mistakesCounter.toString()
+        if (model.voc.isEmpty()) {
+            val amount = intent?.extras?.getInt(resources.getString(R.string.pickAmount)) ?: 10
+            model.voc = database.getWorstLearnedPairs(amount)
+        }
+        if (model.voc.isNotEmpty()) {
+            word.text = model.getTranslation()
+            words.text = model.getWordsAmount()
+            mistakes.text = model.mistakesCounter.toString()
         } else {
             word.text = "Your vocabulary is empty!"
             tiEdit.visibility = View.INVISIBLE
@@ -63,7 +60,7 @@ class LearningActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (iterator != 0 && voc.size == iterator) {
+        if (model.iterator != 0 && model.voc.size == model.iterator) {
             (check as Button).text = "Finish"
             check.setOnClickListener {
                 finish()
@@ -77,14 +74,17 @@ class LearningActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun checkWord(@Suppress("UNUSED_PARAMETER") view: View) {
 
+        val voc = model.voc
+        var iterator = model.iterator
+
         if (tiEdit.text.toString() != voc[iterator].word) {
             AlertDialog.Builder(this)
                 .setTitle("Wrong!")
                 .setMessage("${voc[iterator].word}\n\n${voc[iterator].trans}")
                 .create()
                 .show()
-            mistakesCounter++
-            mistakes.text = mistakesCounter.toString()
+            model.mistakesCounter++
+            mistakes.text = model.mistakesCounter.toString()
         } else {
             voc[iterator].learned = true
             val makeText = Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT)
@@ -92,7 +92,8 @@ class LearningActivity : AppCompatActivity() {
             makeText.show()
         }
 
-        if (++iterator == voc.size) {
+        iterator = ++model.iterator
+        if (iterator == voc.size) {
             val learned = voc.filter { it.learned }.toList()
             database.updateStreak(learned)
             AlertDialog.Builder(this)
@@ -116,7 +117,7 @@ class LearningActivity : AppCompatActivity() {
          * Fill text views
          */
         words.text = "${iterator}/${voc.size}"
-        percentage.text = "${100 - mistakesCounter * 100 / iterator}%"
+        percentage.text = "${100 - model.mistakesCounter * 100 / iterator}%"
         tiEdit.text?.clear()
     }
 
@@ -124,13 +125,13 @@ class LearningActivity : AppCompatActivity() {
      * Update previous pair or toast "Unable" if iterator == 0
      */
     fun updatePair(@Suppress("UNUSED_PARAMETER") view: View) {
-        if (iterator == 0) {
+        if (model.iterator == 0) {
             val makeText = Toast.makeText(this, "Unable now.", Toast.LENGTH_SHORT)
             makeText.setGravity(Gravity.TOP, 0, percentage.bottom + TOAST_OFFSET)
             makeText.show()
         } else {
             val intent = Intent(this, UpdateActivity::class.java)
-            intent.putExtra("pair", voc[iterator - 1])
+            intent.putExtra("pair", model.voc[model.iterator - 1])
             startActivityForResult(intent, UPDATE_CODE)
         }
     }
@@ -145,35 +146,6 @@ class LearningActivity : AppCompatActivity() {
             makeText.setGravity(Gravity.TOP, 0, percentage.bottom + TOAST_OFFSET)
             makeText.show()
         }
-    }
-
-    /**
-     * Save instance state
-     */
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelableArrayList("voc", voc as ArrayList<out Parcelable>)
-        outState.putString("words", words.text.toString())
-        outState.putString("percentage", percentage.text.toString())
-        outState.putString("answer", tiEdit.text.toString())
-        outState.putInt("iterator", iterator)
-        outState.putInt("mistakes", mistakesCounter)
-        outState.putString("currentWord", word.text.toString())
-        super.onSaveInstanceState(outState)
-    }
-
-    /**
-     * Restore instance state
-     */
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        voc = savedInstanceState?.getParcelableArrayList<Pair>("voc") as List<Pair>
-        words.text = savedInstanceState.getString("words")
-        percentage.text = savedInstanceState.getString("percentage")
-        tiEdit.setText(savedInstanceState.getString("answer"))
-        mistakesCounter = savedInstanceState.getInt("mistakes")
-        mistakes.text = mistakesCounter.toString()
-        iterator = savedInstanceState.getInt("iterator")
-        word.text = savedInstanceState.getString("currentWord")
     }
 
     companion object {

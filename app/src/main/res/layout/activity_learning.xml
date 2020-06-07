@@ -81,7 +81,7 @@
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="54dp"
             android:background="@drawable/rounded_primary"
             android:onClick="checkWord"
             android:text="@string/check"
