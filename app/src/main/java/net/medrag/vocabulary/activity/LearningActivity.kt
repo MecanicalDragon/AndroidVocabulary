@@ -16,16 +16,14 @@ import kotlinx.android.synthetic.main.activity_learning.*
 import net.medrag.vocabulary.R
 import net.medrag.vocabulary.db.Pair
 import net.medrag.vocabulary.db.Repository
-import java.util.ArrayList
+import java.util.*
 
-//TODO: fix this shit
 class LearningActivity : AppCompatActivity() {
 
     private lateinit var database: Repository
     private lateinit var voc: List<Pair>
     private var iterator = 0
     private var mistakesCounter = 0
-    private var challenged = false
 
     /**
      * Create new activity
@@ -45,25 +43,31 @@ class LearningActivity : AppCompatActivity() {
                 return@setOnEditorActionListener true
             } else return@setOnEditorActionListener false
         }
+
+        // Retrieve vocabulary with specified size
+        val amount = intent?.extras?.getInt(resources.getString(R.string.pickAmount)) ?: 10
+        voc = database.getWorstLearnedPairs(amount)
+        iterator = 0
+        mistakesCounter = 0
+        if (voc.isNotEmpty()) {
+            word.text = voc[iterator].trans
+            words.text = "$iterator/${voc.size}"
+            mistakes.text = mistakesCounter.toString()
+        } else {
+            word.text = "Your vocabulary is empty!"
+            tiEdit.visibility = View.INVISIBLE
+            transInput.visibility = View.INVISIBLE
+            check.visibility = View.INVISIBLE
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (challenged) {
-            getLayout.visibility = View.GONE
-            if (iterator != 0 && voc.size == iterator) {
-                (check as Button).text = "Finish"
-                check.setOnClickListener {
-                    learningView.visibility = View.GONE
-                    challenged = false
-                    tiEdit.text?.clear()
-                    getLayout.visibility = View.VISIBLE
-                }
+        if (iterator != 0 && voc.size == iterator) {
+            (check as Button).text = "Finish"
+            check.setOnClickListener {
+                finish()
             }
-            learningView.visibility = View.VISIBLE
-        } else {
-            learningView.visibility = View.GONE
-            getLayout.visibility = View.VISIBLE
         }
     }
 
@@ -102,9 +106,7 @@ class LearningActivity : AppCompatActivity() {
             word.text = "Congratulations!"
             (check as Button).text = "Finish"
             check.setOnClickListener {
-                learningView.visibility = View.GONE
-                tiEdit.text?.clear()
-                getLayout.visibility = View.VISIBLE
+                finish()
             }
         } else {
             word.text = voc[iterator].trans
@@ -116,34 +118,6 @@ class LearningActivity : AppCompatActivity() {
         words.text = "${iterator}/${voc.size}"
         percentage.text = "${100 - mistakesCounter * 100 / iterator}%"
         tiEdit.text?.clear()
-    }
-
-    fun startChallenge(view: View) {
-        val amount = when ((view as Button).text) {
-            resources.getString(R.string.Get10) -> 10
-            resources.getString(R.string.Get25) -> 25
-            resources.getString(R.string.Get50) -> 50
-            resources.getString(R.string.Get100) -> 100
-            else -> 10
-        }
-        getLayout.visibility = View.GONE
-        voc = database.getWorstLearnedPairs(amount)
-        iterator = 0
-        mistakesCounter = 0
-        if (voc.isNotEmpty()) {
-            word.text = voc[iterator].trans
-            words.text = "$iterator/${voc.size}"
-            mistakes.text = mistakesCounter.toString()
-        } else {
-            word.text = "Your vocabulary is empty!"
-            tiEdit.visibility = View.INVISIBLE
-            transInput.visibility = View.INVISIBLE
-            check.visibility = View.INVISIBLE
-        }
-        challenged = true
-        (check as Button).text = "Check"
-        check.setOnClickListener { checkWord(it) }
-        learningView.visibility = View.VISIBLE
     }
 
     /**
@@ -183,7 +157,6 @@ class LearningActivity : AppCompatActivity() {
         outState.putString("answer", tiEdit.text.toString())
         outState.putInt("iterator", iterator)
         outState.putInt("mistakes", mistakesCounter)
-        outState.putBoolean("challenged", challenged)
         outState.putString("currentWord", word.text.toString())
         super.onSaveInstanceState(outState)
     }
@@ -198,7 +171,6 @@ class LearningActivity : AppCompatActivity() {
         percentage.text = savedInstanceState.getString("percentage")
         tiEdit.setText(savedInstanceState.getString("answer"))
         mistakesCounter = savedInstanceState.getInt("mistakes")
-        challenged = savedInstanceState.getBoolean("challenged")
         mistakes.text = mistakesCounter.toString()
         iterator = savedInstanceState.getInt("iterator")
         word.text = savedInstanceState.getString("currentWord")

@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         tilEdit.text?.clear()
         tilEdit.clearFocus()
         wilEdit.clearFocus()
-        startActivity(Intent(this, LearningActivity::class.java))
+        startActivity(Intent(this, GetLearningActivity::class.java))
     }
 
     fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(wilEdit)
