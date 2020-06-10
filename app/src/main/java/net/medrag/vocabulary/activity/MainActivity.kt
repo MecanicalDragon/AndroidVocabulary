@@ -12,19 +12,18 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import net.medrag.vocabulary.R
 import net.medrag.vocabulary.db.ReducedPair
 import net.medrag.vocabulary.db.Repository
-import org.json.JSONArray
-import org.json.JSONObject
+import net.medrag.vocabulary.model.MainModel
+import net.medrag.vocabulary.model.MainModel.Companion.EN_RU
+import net.medrag.vocabulary.model.MainModel.Companion.MAIN_ACTIVITY
+import net.medrag.vocabulary.model.MainModel.Companion.RU_EN
 import java.io.File
 import java.nio.file.Files
 
@@ -32,6 +31,7 @@ import java.nio.file.Files
 class MainActivity : AppCompatActivity() {
 
     private lateinit var database: Repository
+    private val model: MainModel by viewModels()
     private lateinit var key: String
     private lateinit var url: String
 
@@ -42,28 +42,34 @@ class MainActivity : AppCompatActivity() {
         key = resources.getString(R.string.yandexApiKey)
         url = resources.getString(R.string.yandexApiRequestUri)
         yandexLink.movementMethod = LinkMovementMethod.getInstance()
-        switchYandexVisibility(false)
+        model.word.observe(this, Observer { wordInput.setText(it) })
+        model.translation.observe(this, Observer { translationInput.setText(it) })
+        model.yandexVisibility.observe(this, Observer {
+            yandexLicenseText.visibility = if (it) View.VISIBLE else View.GONE
+            yandexLink.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     fun addToVoc(@Suppress("UNUSED_PARAMETER") view: View) {
-
-        val word = wilEdit.text.toString()
-        val translation = tilEdit.text.toString()
-        if (word.isBlank() || translation.isBlank()) {
+        model.word.value = wordInput.text.toString()
+        model.translation.value = translationInput.text.toString()
+        if (model.word.value.isNullOrBlank() || model.translation.value.isNullOrBlank()) {
             Toast.makeText(this, "Fill the fields!", Toast.LENGTH_SHORT).show()
-        } else if (database.addWord(wilEdit.text.toString(), tilEdit.text.toString()) > 0) {
-            wilEdit.text?.clear()
-            tilEdit.text?.clear()
-            switchYandexVisibility(false)
-            Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show()
+            if (database.addWord(wordInput.text.toString(), translationInput.text.toString()) > 0) {
+                model.word.value = ""
+                model.translation.value = ""
+                model.yandexVisibility.value = false
+                Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     fun askYandex(@Suppress("UNUSED_PARAMETER") view: View) {
-        val word = wilEdit.text.toString()
-        val translation = tilEdit.text.toString()
+        val word = wordInput.text.toString()
+        val translation = translationInput.text.toString()
         if (word.isBlank() && translation.isBlank()) {
             showToast("Nothing to ask.")
             return
@@ -92,20 +98,24 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, NotificationSchedulingActivity::class.java))
 
     fun learn(@Suppress("UNUSED_PARAMETER") view: View) {
-        wilEdit.text?.clear()
-        tilEdit.text?.clear()
-        tilEdit.clearFocus()
-        wilEdit.clearFocus()
+        model.word.value = ""
+        model.translation.value = ""
+        model.yandexVisibility.value = false
+        translationInput.clearFocus()
+        wordInput.clearFocus()
         startActivity(Intent(this, GetLearningActivity::class.java))
     }
 
-    fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(wilEdit)
-    fun pasteFromClipboardRu(@Suppress("UNUSED_PARAMETER") view: View) = pasteFromClipboard(tilEdit)
+    fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) =
+        pasteFromClipboard(wordInput)
+
+    fun pasteFromClipboardRu(@Suppress("UNUSED_PARAMETER") view: View) =
+        pasteFromClipboard(translationInput)
 
     private fun pasteFromClipboard(inputField: TextInputEditText) {
         val mode = when (inputField) {
-            wilEdit -> EN_RU
-            tilEdit -> RU_EN
+            wordInput -> EN_RU
+            translationInput -> RU_EN
             else -> {
                 Log.e(MAIN_ACTIVITY, "You've passed invalid field in the paste function")
                 showToast("WTF?! You've did smth, that breaks normal workflow of the app.")
@@ -132,42 +142,7 @@ class MainActivity : AppCompatActivity() {
     private fun yandexRequest(textOut: String, mode: String) {
         if (textOut.isBlank()) {
             Log.e(MAIN_ACTIVITY, "Passed text is blank. There will be no request to Yandex.")
-            return
-        }
-        Log.i(MAIN_ACTIVITY, "Preparing request to Yandex...")
-        GlobalScope.launch(Dispatchers.Main) {
-            var data = ""
-            HttpClient().use {
-                data = it.get(String.format(YANDEX_REQUEST, url, key, textOut, mode))
-            }
-            Log.i(MAIN_ACTIVITY, "Request from yandex has been received: $data")
-            if (data.isBlank()) return@launch
-            val json = JSONObject(data)
-            val code = json.get(CODE) as Int
-            if (code == 200) {
-                val lang = json.get(LANG)
-                val resp = json.get(TEXT)
-                if (resp is JSONArray && resp.length() > 0) {
-                    when (lang) {
-                        RU_EN -> wilEdit.setText(resp[0].toString())
-                        EN_RU -> tilEdit.setText(resp[0].toString())
-                        else -> {
-                            Log.w(MAIN_ACTIVITY, "Unexpected response form Yandex: $lang")
-                        }
-                    }
-                    switchYandexVisibility(true)
-                } else {
-                    Log.e(MAIN_ACTIVITY, "Yandex request failed: $data")
-                }
-            } else {
-                Log.e(MAIN_ACTIVITY, "Yandex request failed: $data")
-            }
-        }
-    }
-
-    private fun switchYandexVisibility(show: Boolean) {
-        yandexLicenseText.visibility = if (show) View.VISIBLE else View.GONE
-        yandexLink.visibility = if (show) View.VISIBLE else View.GONE
+        } else model.doYandexRequest(String.format(YANDEX_REQUEST, url, key, textOut, mode))
     }
 
     private fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).apply {
@@ -176,12 +151,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val MAIN_ACTIVITY = "MAIN_ACTIVITY"
-        const val RU_EN = "ru-en"
-        const val EN_RU = "en-ru"
         const val YANDEX_REQUEST = "%s?key=%s&text=%s&lang=%s&format=plain"
-        const val CODE = "code"
-        const val LANG = "lang"
-        const val TEXT = "text"
     }
 }

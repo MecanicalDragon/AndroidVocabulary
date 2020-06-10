@@ -20,17 +20,17 @@ class UpdateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
         pair = intent.getParcelableExtra<Pair>("pair")
-        wilEdit.setText(pair.word)
-        tilEdit.setText(pair.trans)
-        wilEdit.hint = pair.word
-        tilEdit.hint = pair.trans
+        wordInput.setText(pair.word)
+        translationInput.setText(pair.trans)
+        wordInput.hint = pair.word
+        translationInput.hint = pair.trans
         database = Repository(this)
     }
 
     fun updatePair(@Suppress("UNUSED_PARAMETER") view: View) {
-        pair.word = if (wilEdit.text.toString().isNotBlank()) wilEdit.text.toString() else pair.word
+        pair.word = if (wordInput.text.toString().isNotBlank()) wordInput.text.toString() else pair.word
         pair.trans =
-            if (tilEdit.text.toString().isNotBlank()) tilEdit.text.toString() else pair.trans
+            if (translationInput.text.toString().isNotBlank()) translationInput.text.toString() else pair.trans
         database.update(pair)
         setResult(Activity.RESULT_OK, Intent())
         finish()

@@ -116,7 +116,7 @@
                 android:layout_marginEnd="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/wilEdit"
+                    android:id="@+id/wordInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/word" />
@@ -180,7 +180,7 @@
                 android:layout_marginEnd="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tilEdit"
+                    android:id="@+id/translationInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/translation" />
