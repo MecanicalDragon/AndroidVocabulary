@@ -19,7 +19,7 @@ class UpdateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
-        pair = intent.getParcelableExtra<Pair>("pair")
+        pair = intent.getParcelableExtra(resources.getString(R.string.pairExtra))
         wordInput.setText(pair.word)
         translationInput.setText(pair.trans)
         wordInput.hint = pair.word
@@ -31,6 +31,7 @@ class UpdateActivity : AppCompatActivity() {
         pair.word = if (wordInput.text.toString().isNotBlank()) wordInput.text.toString() else pair.word
         pair.trans =
             if (translationInput.text.toString().isNotBlank()) translationInput.text.toString() else pair.trans
+        pair.streak = 0
         database.update(pair)
         setResult(Activity.RESULT_OK, Intent())
         finish()

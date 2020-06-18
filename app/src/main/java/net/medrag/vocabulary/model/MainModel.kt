@@ -1,14 +1,19 @@
 package net.medrag.vocabulary.model
 
+import android.content.Context
 import android.util.Log
+import android.view.Gravity
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.launch
+import net.medrag.vocabulary.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 
 class MainModel : ViewModel() {
 
@@ -18,11 +23,25 @@ class MainModel : ViewModel() {
         MutableLiveData<Boolean>().apply { postValue(false) }
 
 
-    fun doYandexRequest(request: String) {
+    fun doYandexRequest(request: String, context: Context) {
         viewModelScope.launch {
             var data = ""
             Log.i(MAIN_ACTIVITY, "Preparing request to Yandex...")
-            HttpClient().use { data = it.get(request) }
+            try {
+                HttpClient().use { data = it.get(request) }
+            } catch (e: Exception) {    //UnknownHostException
+                Log.e(MAIN_ACTIVITY, "Exception during Yandex request!")
+                Log.e(MAIN_ACTIVITY, e.message)
+                Toast.makeText(
+                    context,
+                    context.resources.getString(R.string.checkInetConnection),
+                    Toast.LENGTH_SHORT
+                ).apply {
+                    setGravity(Gravity.TOP, 0, 100)
+                    show()
+                }
+                return@launch
+            }
             Log.i(MAIN_ACTIVITY, "Request from yandex has been received: $data")
             if (data.isBlank()) return@launch
             val json = JSONObject(data)

@@ -31,4 +31,10 @@
     <string name="Get25">Get 25</string>
     <string name="Get10">Get 10</string>
     <string name="pickAmount">Pick amount</string>
+    <string name="checkInetConnection">Check the internet connection!</string>
+    <string name="findNext">Find next</string>
+    <string name="noWords">No words matching specified pattern!</string>
+    <string name="updSuccess">Updated successfully.</string>
+    <string name="error">Operation failed!</string>
+    <string name="noUpd">Nothing to update now!</string>
 </resources>

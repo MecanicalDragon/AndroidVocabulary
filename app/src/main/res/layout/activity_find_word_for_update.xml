@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/findWordWrapperLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBg"
+    tools:context=".activity.FindWordForUpdateActivity">
+
+    <include layout="@layout/find_word_input_part"/>
+    <include layout="@layout/find_word_control_part"/>
+
+</LinearLayout>

@@ -31,5 +31,6 @@ data class Pair(
     companion object CREATOR : Parcelable.Creator<Pair> {
         override fun createFromParcel(parcel: Parcel): Pair = Pair(parcel)
         override fun newArray(size: Int): Array<Pair?> = arrayOfNulls(size)
+        val EMPTY_PAIR = Pair(0, "", "", 0, false)
     }
 }

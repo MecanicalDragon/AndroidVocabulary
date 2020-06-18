@@ -21,7 +21,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_primary"
             android:onClick="addToVoc"
             android:text="@string/add_word"
@@ -35,20 +35,33 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded"
             android:onClick="learn"
             android:text="@string/learn"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/askYandex" />
-
+        
+        <Button
+            android:id="@+id/update"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded"
+            android:onClick="update"
+            android:text="@string/update"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/learn" />
+        
         <Button
             android:id="@+id/dumpDb"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_gray"
             android:onClick="dump"
             android:text="@string/dump_db"
@@ -61,20 +74,20 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_gray"
             android:onClick="toNotificationSettings"
             android:text="@string/notification_settings"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/learn" />
+            app:layout_constraintTop_toBottomOf="@+id/update" />
 
         <Button
             android:id="@+id/askYandex"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_yellow"
             android:onClick="askYandex"
             android:text="@string/askYandex"

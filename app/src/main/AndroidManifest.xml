@@ -43,8 +43,13 @@
 
         <activity android:name=".activity.LearningActivity" />
         <activity android:name=".activity.UpdateActivity" />
-        <activity android:name=".activity.NotificationSchedulingActivity" />
-        <activity android:name=".activity.NotificationLandingActivity" />
+        <activity android:name=".activity.FindWordForUpdateActivity" />
+        <activity
+            android:name=".activity.NotificationSchedulingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotificationLandingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

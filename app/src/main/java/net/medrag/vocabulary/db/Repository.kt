@@ -80,6 +80,37 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
     }
 
     /**
+     * Update existing pair
+     */
+    fun update(pair: Pair) {
+        val content = ContentValues()
+        content.put(WORD, pair.word)
+        content.put(TRANSLATION, pair.trans)
+        content.put(STREAK, pair.streak)
+        content.put(LEARNED, pair.learned)
+        database.update(
+            TABLE_NAME,
+            content,
+            "$ID = ?",
+            arrayOf(pair.id.toString())
+        )
+    }
+
+    /**
+     * Retrieves all pairs, matching specified pattern.
+     */
+    fun getAllLike(pattern: String): List<Pair> {
+        if (pattern.length < 2) return emptyList()
+        val like = "%$pattern%"
+        (database.rawQuery(
+            "select * from $TABLE_NAME where $WORD like ? or $TRANSLATION like ?",
+            arrayOf(like, like)
+        )).use {
+            return mapCursorToPairArray(it)
+        }
+    }
+
+    /**
      * Retrieve worst learned words.
      */
     fun getWorstLearnedPairs(amount: Int): ArrayList<Pair> {
@@ -138,22 +169,6 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
             )
         }
         return result
-    }
-
-    /**
-     * Update existing pair
-     */
-    fun update(pair: Pair) {
-        val content = ContentValues()
-        content.put(WORD, pair.word)
-        content.put(TRANSLATION, pair.trans)
-        content.put(STREAK, pair.streak)
-        content.put(LEARNED, pair.learned)
-        database.update(
-            TABLE_NAME,
-            content,
-            "$ID = ?",
-            Array(1) { pair.id.toString() })
     }
 
     //

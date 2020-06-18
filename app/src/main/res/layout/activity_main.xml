@@ -94,7 +94,7 @@
     <!--    Add new word button-->
     <Button
         android:id="@+id/addWord"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_primary"
@@ -108,15 +108,28 @@
 
     <Button
         android:id="@+id/learn"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/rounded"
         android:onClick="learn"
         android:text="@string/learn"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/update"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addWord" />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded"
+        android:onClick="update"
+        android:text="@string/update"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/learn"
         app:layout_constraintTop_toBottomOf="@+id/addWord" />
 
     <Button
@@ -145,7 +158,7 @@
 
     <Button
         android:id="@+id/askYandex"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/rounded_yellow"

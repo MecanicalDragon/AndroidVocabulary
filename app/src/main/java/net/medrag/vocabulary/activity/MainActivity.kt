@@ -79,9 +79,13 @@ class MainActivity : AppCompatActivity() {
         yandexRequest(text, mode)
     }
 
+    fun update(@Suppress("UNUSED_PARAMETER") view: View) =
+        startActivity(Intent(this, FindWordForUpdateActivity::class.java))
+
     fun dump(@Suppress("UNUSED_PARAMETER") view: View) {
         val dump: List<String> =
-            database.extractAll().map { ReducedPair(it.trans, it.word) }.map { it.toString() }
+            database.extractAll().map { ReducedPair(it.trans, it.word, it.streak) }
+                .map { it.toString() }
                 .toList()
         // Check if env is accessible
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     private fun yandexRequest(textOut: String, mode: String) {
         if (textOut.isBlank()) {
             Log.e(MAIN_ACTIVITY, "Passed text is blank. There will be no request to Yandex.")
-        } else model.doYandexRequest(String.format(YANDEX_REQUEST, url, key, textOut, mode))
+        } else model.doYandexRequest(String.format(YANDEX_REQUEST, url, key, textOut, mode), this)
     }
 
     private fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).apply {
