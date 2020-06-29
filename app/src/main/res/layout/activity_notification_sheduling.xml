@@ -66,9 +66,9 @@
 
     <EditText
         android:id="@+id/pairsNumber"
-        android:layout_width="30dp"
+        android:layout_width="24dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="number"

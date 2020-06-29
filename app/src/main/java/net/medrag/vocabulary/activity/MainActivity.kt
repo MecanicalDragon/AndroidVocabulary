@@ -79,6 +79,9 @@ class MainActivity : AppCompatActivity() {
         yandexRequest(text, mode)
     }
 
+    fun toAchievements(@Suppress("UNUSED_PARAMETER") view: View) =
+        startActivity(Intent(this, AchievementsActivity::class.java))
+
     fun update(@Suppress("UNUSED_PARAMETER") view: View) =
         startActivity(Intent(this, FindWordForUpdateActivity::class.java))
 

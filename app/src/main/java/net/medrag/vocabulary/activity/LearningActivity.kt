@@ -96,18 +96,14 @@ class LearningActivity : AppCompatActivity() {
         if (iterator == voc.size) {
             val learned = voc.filter { it.learned }.toList()
             database.updateStreak(learned)
-            AlertDialog.Builder(this)
-                .setTitle("Congratulations!")
-                .setMessage(
-                    "You've finished the challenge, translating correctly ${learned.size} words of ${voc.size}. " +
-                            "In later versions you'll receive a medal for this achievement, but for now just take our endorsement."
-                )
-                .create()
-                .show()
             word.text = "Congratulations!"
             (check as Button).text = "Finish"
             check.setOnClickListener {
                 finish()
+            }
+            if (learned.size == voc.size) {
+                database.increaseAchievementScore("get${voc.size}GoldenCup")
+                startActivity(Intent(this, AchievementsActivity::class.java))
             }
         } else {
             word.text = voc[iterator].trans
@@ -131,7 +127,7 @@ class LearningActivity : AppCompatActivity() {
             makeText.show()
         } else {
             val intent = Intent(this, UpdateActivity::class.java)
-            intent.putExtra("pair", model.voc[model.iterator - 1])
+            intent.putExtra(resources.getString(R.string.pairExtra), model.voc[model.iterator - 1])
             startActivityForResult(intent, UPDATE_CODE)
         }
     }

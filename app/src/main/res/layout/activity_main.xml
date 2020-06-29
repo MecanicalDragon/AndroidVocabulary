@@ -191,4 +191,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yandexLicenseText" />
 
+    <Button
+        android:id="@+id/toAchievements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_primary"
+        android:onClick="toAchievements"
+        android:layout_marginTop="25dp"
+        android:text="@string/achievements"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/learn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

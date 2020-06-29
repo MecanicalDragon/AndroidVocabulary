@@ -37,4 +37,6 @@
     <string name="updSuccess">Updated successfully.</string>
     <string name="error">Operation failed!</string>
     <string name="noUpd">Nothing to update now!</string>
+    <string name="achievements">Achievements</string>
+    <string name="achievementsColon">Achievements:</string>
 </resources>

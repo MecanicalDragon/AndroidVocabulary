@@ -7,15 +7,28 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import net.medrag.vocabulary.R
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-class Repository(private val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+class Repository(private val context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     private var database: SQLiteDatabase = this.writableDatabase
 
     init {
         Log.i(DATABASE, "Database path: ${database.path}")
+        Log.i(DATABASE, "Database version: ${database.version}")
+        if (database.version != DATABASE_VERSION) {
+            Log.i(DATABASE, "Database upgrade incoming...")
+            onUpgrade(database, database.version, DATABASE_VERSION)
+            Log.i(
+                DATABASE,
+                "Database upgrade has been finished. Current version is $DATABASE_VERSION"
+            )
+        }
     }
 
     /**
@@ -47,15 +60,18 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         /**
          * do a transaction
          */
-        db.beginTransaction()
         try {
+            db.beginTransaction()
             db.execSQL(CREATE)
             for (query in queries) {
-                db.insert(TABLE_NAME, null, query)
+                db.insert(VOCABULARY, null, query)
             }
+            db.execSQL(UPDATE_1)
+            update1(db)
             db.setTransactionSuccessful()
         } finally {
-            db.endTransaction()
+            if (db.inTransaction())
+                db.endTransaction()
         }
         Log.i(DATABASE, "Database initialized.")
     }
@@ -64,7 +80,50 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
      * Upgrade database
      */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("")
+        try {
+            db.beginTransaction()
+            when (newVersion) {
+                2 -> {
+                    db.execSQL(UPDATE_1)
+                    update1(db)
+                }
+            }
+            db.setTransactionSuccessful()
+        } finally {
+            if (db.inTransaction())
+                db.endTransaction()
+        }
+    }
+
+    private fun update1(db: SQLiteDatabase) {
+        val identifier =
+            context.resources.getIdentifier("achievements", "raw", context.packageName)
+        val input = context.resources.openRawResource(identifier)
+        BufferedReader(InputStreamReader(input)).lines().map {
+            ContentValues().apply {
+                put(ACHIEVEMENT_NAME, it)
+                put(ACHIEVEMENT_SCORE, 0)
+            }
+        }.forEachOrdered { db.insert(ACHIEVEMENT, null, it) }
+    }
+
+    fun getAchievements(): HashMap<String, Int> {
+        (database.rawQuery("select * from $ACHIEVEMENT", null)).use {
+            val result = HashMap<String, Int>()
+            val a = it.getColumnIndex(ACHIEVEMENT_NAME)
+            val s = it.getColumnIndex(ACHIEVEMENT_SCORE)
+            while (it.moveToNext()) {
+                result[it.getString(a)] = it.getInt(s)
+            }
+            return result
+        }
+    }
+
+    fun increaseAchievementScore(achievement: String) {
+        database.execSQL(
+            "update $ACHIEVEMENT set $ACHIEVEMENT_SCORE = $ACHIEVEMENT_SCORE + 1 where $ACHIEVEMENT_NAME = ?",
+            arrayOf(achievement)
+        )
     }
 
     /**
@@ -76,7 +135,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         content.put(TRANSLATION, trans)
         content.put(STREAK, 0)
         content.put(LEARNED, false)
-        return database.insert(TABLE_NAME, null, content)
+        return database.insert(VOCABULARY, null, content)
     }
 
     /**
@@ -89,7 +148,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         content.put(STREAK, pair.streak)
         content.put(LEARNED, pair.learned)
         database.update(
-            TABLE_NAME,
+            VOCABULARY,
             content,
             "$ID = ?",
             arrayOf(pair.id.toString())
@@ -103,7 +162,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         if (pattern.length < 2) return emptyList()
         val like = "%$pattern%"
         (database.rawQuery(
-            "select * from $TABLE_NAME where $WORD like ? or $TRANSLATION like ?",
+            "select * from $VOCABULARY where $WORD like ? or $TRANSLATION like ?",
             arrayOf(like, like)
         )).use {
             return mapCursorToPairArray(it)
@@ -115,7 +174,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
      */
     fun getWorstLearnedPairs(amount: Int): ArrayList<Pair> {
         (database.rawQuery(
-            "select * from $TABLE_NAME order by $STREAK ASC limit ?",
+            "select * from $VOCABULARY order by $STREAK ASC limit ?",
             arrayOf(amount.toString())
         )).use {
             return mapCursorToPairArray(it)
@@ -128,7 +187,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
     fun getRandomSeveralPairs(amount: Int): ArrayList<Pair> {
         val learnedMarker = context.resources.getInteger(R.integer.correctAnswersToLearnAmount)
         (database.rawQuery(
-            "select * from $TABLE_NAME where $STREAK < ? order by random() limit ?",
+            "select * from $VOCABULARY where $STREAK < ? order by random() limit ?",
             arrayOf(learnedMarker.toString(), amount.toString())
         )).use {
             return mapCursorToPairArray(it)
@@ -138,7 +197,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
     fun updateStreak(pairs: List<Pair>) {
         if (pairs.isEmpty()) return
         val inVar = pairs.map { it.id.toString() }.reduce { acc, s -> "$acc,$s" }
-        val sql = "update $TABLE_NAME set $STREAK = $STREAK + 1 where $ID in ($inVar)"
+        val sql = "update $VOCABULARY set $STREAK = $STREAK + 1 where $ID in ($inVar)"
         Log.i(DATABASE, "Executing SQL: $sql")
         database.execSQL(sql)
     }
@@ -146,7 +205,7 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
     /**
      * Get all saved words
      */
-    fun extractAll(): List<Pair> = (database.rawQuery("select * from $TABLE_NAME", null)).use {
+    fun extractAll(): List<Pair> = (database.rawQuery("select * from $VOCABULARY", null)).use {
         return mapCursorToPairArray(it)
     }
 
@@ -177,9 +236,12 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
 //    }
 
     companion object {
+
+        const val DATABASE_VERSION = 2
+
         const val DATABASE = "DATABASE"
         const val DATABASE_NAME = "MyVocabulary.db"
-        const val TABLE_NAME = "VOCAB"
+        const val VOCABULARY = "VOCAB"
         const val ID = "ID"
         const val WORD = "WORD"
         const val TRANSLATION = "TRANSLATION"
@@ -187,8 +249,16 @@ class Repository(private val context: Context) : SQLiteOpenHelper(context, DATAB
         const val LEARNED = "LEARNED"
         const val TAG = "TAG"
 
+        private const val ACHIEVEMENT = "ACHIEVEMENT"
+        private const val ACHIEVEMENT_NAME = "NAME"
+        private const val ACHIEVEMENT_SCORE = "SCORE"
+
         const val CREATE =
-            "CREATE TABLE IF NOT EXISTS $TABLE_NAME ($ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "CREATE TABLE IF NOT EXISTS $VOCABULARY ($ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "$WORD TEXT, $TRANSLATION TEXT, $TAG TEXT, $STREAK INTEGER, $LEARNED NUMERIC);"
+
+        private const val UPDATE_1 =
+            "CREATE TABLE IF NOT EXISTS $ACHIEVEMENT ($ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "$ACHIEVEMENT_NAME TEXT, $ACHIEVEMENT_SCORE INTEGER);"
     }
 }

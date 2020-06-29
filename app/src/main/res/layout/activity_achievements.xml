@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBg"
+    tools:context=".activity.AchievementsActivity">
+
+    <ImageView
+        android:id="@+id/goldenCups10"
+        android:layout_width="80dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/goldenCups25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/achievementsLabel"
+        app:srcCompat="@drawable/cup" />
+
+    <TextView
+        android:id="@+id/get10GoldenCupScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="#00FF00"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups10"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups10"
+        app:layout_constraintTop_toTopOf="@+id/goldenCups10" />
+
+    <TextView
+        android:id="@+id/get10GoldenCupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Get10"
+        android:textColor="#00FF00"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goldenCups10"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups10"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups10" />
+
+    <ImageView
+        android:id="@+id/goldenCups25"
+        android:layout_width="80dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/goldenCups50"
+        app:layout_constraintStart_toEndOf="@+id/goldenCups10"
+        app:layout_constraintTop_toBottomOf="@+id/achievementsLabel"
+        app:srcCompat="@drawable/cup" />
+
+    <TextView
+        android:id="@+id/get25GoldenCupScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="#0000FF"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups25"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups25"
+        app:layout_constraintTop_toTopOf="@+id/goldenCups25" />
+
+    <TextView
+        android:id="@+id/get25GoldenCupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Get25"
+        android:textColor="#0000FF"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goldenCups25"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups25"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups25" />
+
+    <ImageView
+        android:id="@+id/goldenCups50"
+        android:layout_width="80dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/goldenCups100"
+        app:layout_constraintStart_toEndOf="@+id/goldenCups25"
+        app:layout_constraintTop_toBottomOf="@+id/achievementsLabel"
+        app:srcCompat="@drawable/cup" />
+
+    <TextView
+        android:id="@+id/get50GoldenCupScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="#FF0000"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups50"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups50"
+        app:layout_constraintTop_toTopOf="@+id/goldenCups50" />
+
+    <TextView
+        android:id="@+id/get50GoldenCupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Get50"
+        android:textColor="#FF0000"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goldenCups50"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups50"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups50" />
+
+    <ImageView
+        android:id="@+id/goldenCups100"
+        android:layout_width="80dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goldenCups50"
+        app:layout_constraintTop_toBottomOf="@+id/achievementsLabel"
+        app:srcCompat="@drawable/cup" />
+
+    <TextView
+        android:id="@+id/get100GoldenCupScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups100"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups100"
+        app:layout_constraintTop_toTopOf="@+id/goldenCups100" />
+
+    <TextView
+        android:id="@+id/get100GoldenCupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Get100"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goldenCups100"
+        app:layout_constraintEnd_toEndOf="@+id/goldenCups100"
+        app:layout_constraintStart_toStartOf="@+id/goldenCups100" />
+
+    <TextView
+        android:id="@+id/achievementsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/achievementsColon"
+        android:textSize="30sp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/rounded_primary"
             android:onClick="addToVoc"
             android:text="@string/add_word"
@@ -35,7 +35,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/rounded"
             android:onClick="learn"
             android:text="@string/learn"
@@ -48,7 +48,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/rounded"
             android:onClick="update"
             android:text="@string/update"
@@ -57,11 +57,26 @@
             app:layout_constraintTop_toBottomOf="@+id/learn" />
         
         <Button
+            android:id="@+id/toAchievements"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_primary"
+            android:onClick="toAchievements"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/achievements"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:padding="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/update" />
+        
+        <Button
             android:id="@+id/dumpDb"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/rounded_gray"
             android:onClick="dump"
             android:text="@string/dump_db"
@@ -74,20 +89,20 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/rounded_gray"
             android:onClick="toNotificationSettings"
             android:text="@string/notification_settings"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/update" />
+            app:layout_constraintTop_toBottomOf="@+id/toAchievements" />
 
         <Button
             android:id="@+id/askYandex"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/rounded_yellow"
             android:onClick="askYandex"
             android:text="@string/askYandex"
