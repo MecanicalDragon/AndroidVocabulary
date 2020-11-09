@@ -7,13 +7,13 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.medrag.vocabulary.R
-import org.json.JSONArray
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.lang.Exception
 
 class MainModel : ViewModel() {
 
@@ -22,60 +22,60 @@ class MainModel : ViewModel() {
     var yandexVisibility: MutableLiveData<Boolean> =
         MutableLiveData<Boolean>().apply { postValue(false) }
 
-
-    fun doYandexRequest(request: String, context: Context) {
-        viewModelScope.launch {
-            var data = ""
+    fun doYandexRequest(q: String, mode: Translation, context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
             Log.i(MAIN_ACTIVITY, "Preparing request to Yandex...")
             try {
-                HttpClient().use { data = it.get(request) }
-            } catch (e: Exception) {    //UnknownHostException
-                Log.e(MAIN_ACTIVITY, "Exception during Yandex request!")
-                Log.e(MAIN_ACTIVITY, e.message)
-                Toast.makeText(
-                    context,
-                    context.resources.getString(R.string.checkInetConnection),
-                    Toast.LENGTH_SHORT
-                ).apply {
-                    setGravity(Gravity.TOP, 0, 100)
-                    show()
-                }
-                return@launch
-            }
-            Log.i(MAIN_ACTIVITY, "Request from yandex has been received: $data")
-            if (data.isBlank()) return@launch
-            val json = JSONObject(data)
-            val code = json.get(CODE) as Int
-            if (code == 200) {
-                val lang = json.get(LANG)
-                val resp = json.get(TEXT)
-                if (resp is JSONArray && resp.length() > 0) {
-                    when (lang) {
-                        RU_EN -> word.postValue(resp[0].toString())
-                        EN_RU -> translation.postValue(resp[0].toString())
-                        else -> {
-                            Log.w(
-                                MAIN_ACTIVITY,
-                                "Unexpected response form Yandex: $lang"
-                            )
+                val req = Request.Builder()
+                    .url(context.resources.getString(R.string.yandexApiRequestUri))
+                    .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .addHeader("x-rapidapi-key", context.resources.getString(R.string.yandexApiKey))
+                    .addHeader("accept-encoding", "application/gzip")
+                    .addHeader("x-rapidapi-host", "google-translate1.p.rapidapi.com")
+                    .post("q=$q&source=${mode.source}&target=${mode.target}".toRequestBody())
+                    .build()
+                val resp = OkHttpClient().newCall(req).execute()
+                if (resp.code == 200) {
+                    val data = resp.body?.string() ?: ""
+                    Log.i(MAIN_ACTIVITY, "Request from google has been received: $data")
+                    if (data.isBlank()) return@launch
+                    val translate = JSONObject(data).getJSONObject("data")
+                        .getJSONArray("translations").getJSONObject(0).getString("translatedText")
+                    if (translate.isNullOrBlank().not()) {
+                        when (mode) {
+                            Translation.RU -> word.postValue(translate.toString())
+                            Translation.EN -> translation.postValue(translate.toString())
                         }
+                        yandexVisibility.postValue(true)
+                    } else {
+                        Log.e(MAIN_ACTIVITY, "Google request failed: $data")
                     }
-                    yandexVisibility.postValue(true)
-                } else {
-                    Log.e(MAIN_ACTIVITY, "Yandex request failed: $data")
-                }
-            } else {
-                Log.e(MAIN_ACTIVITY, "Yandex request failed: $data")
+                } else showToast(context, resp.message)
+            } catch (e: Exception) {
+                Log.e(MAIN_ACTIVITY, "Exception during Google request!")
+                Log.e(MAIN_ACTIVITY, e.toString())
+                showToast(context, e.message ?: "Something went wrong...")
             }
+        }
+    }
+
+    private fun showToast(context: Context, message: String) {
+        Toast.makeText(
+            context,
+            message,
+            Toast.LENGTH_LONG
+        ).apply {
+            setGravity(Gravity.TOP, 0, 100)
+            show()
         }
     }
 
     companion object {
         const val MAIN_ACTIVITY = "MAIN_ACTIVITY"
-        const val RU_EN = "ru-en"
-        const val EN_RU = "en-ru"
-        const val CODE = "code"
-        const val LANG = "lang"
-        const val TEXT = "text"
+
+        enum class Translation(val source: String, val target: String) {
+            EN("en", "ru"),
+            RU("ru", "en");
+        }
     }
 }

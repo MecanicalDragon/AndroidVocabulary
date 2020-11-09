@@ -21,9 +21,9 @@ import net.medrag.vocabulary.R
 import net.medrag.vocabulary.db.ReducedPair
 import net.medrag.vocabulary.db.Repository
 import net.medrag.vocabulary.model.MainModel
-import net.medrag.vocabulary.model.MainModel.Companion.EN_RU
 import net.medrag.vocabulary.model.MainModel.Companion.MAIN_ACTIVITY
-import net.medrag.vocabulary.model.MainModel.Companion.RU_EN
+import net.medrag.vocabulary.model.MainModel.Companion.Translation.EN
+import net.medrag.vocabulary.model.MainModel.Companion.Translation.RU
 import java.io.File
 import java.nio.file.Files
 
@@ -32,15 +32,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var database: Repository
     private val model: MainModel by viewModels()
-    private lateinit var key: String
-    private lateinit var url: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         database = Repository(this)
-        key = resources.getString(R.string.yandexApiKey)
-        url = resources.getString(R.string.yandexApiRequestUri)
         yandexLink.movementMethod = LinkMovementMethod.getInstance()
         model.word.observe(this, Observer { wordInput.setText(it) })
         model.translation.observe(this, Observer { translationInput.setText(it) })
@@ -75,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val text = if (word.isNotBlank()) word else translation
-        val mode = if (word.isNotBlank()) EN_RU else RU_EN
+        val mode = if (word.isNotBlank()) EN else RU
         yandexRequest(text, mode)
     }
 
@@ -114,21 +110,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun pasteFromClipboardEn(@Suppress("UNUSED_PARAMETER") view: View) =
-        pasteFromClipboard(wordInput)
+        pasteFromClipboard(wordInput, EN)
 
     fun pasteFromClipboardRu(@Suppress("UNUSED_PARAMETER") view: View) =
-        pasteFromClipboard(translationInput)
+        pasteFromClipboard(translationInput, RU)
 
-    private fun pasteFromClipboard(inputField: TextInputEditText) {
-        val mode = when (inputField) {
-            wordInput -> EN_RU
-            translationInput -> RU_EN
-            else -> {
-                Log.e(MAIN_ACTIVITY, "You've passed invalid field in the paste function")
-                showToast("WTF?! You've did smth, that breaks normal workflow of the app.")
-                return
-            }
-        }
+    private fun pasteFromClipboard(
+        field: TextInputEditText,
+        mode: MainModel.Companion.Translation
+    ) {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         if (clipboard.hasPrimaryClip()) {
             val clip = clipboard.primaryClipDescription
@@ -139,25 +129,21 @@ class MainActivity : AppCompatActivity() {
                 if (text.isNullOrBlank()) {
                     showToast("Text in clipboard is blank!")
                 } else {
-                    inputField.setText(text)
+                    field.setText(text)
                     yandexRequest(text.toString(), mode)
                 }
             } else showToast("Not a text in the clipboard!")
         } else showToast("The clipboard is empty!")
     }
 
-    private fun yandexRequest(textOut: String, mode: String) {
+    private fun yandexRequest(textOut: String, mode: MainModel.Companion.Translation) {
         if (textOut.isBlank()) {
             Log.e(MAIN_ACTIVITY, "Passed text is blank. There will be no request to Yandex.")
-        } else model.doYandexRequest(String.format(YANDEX_REQUEST, url, key, textOut, mode), this)
+        } else model.doYandexRequest(textOut, mode, this)
     }
 
     private fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).apply {
         setGravity(Gravity.TOP, 0, dumpDb.top - 170)
         show()
-    }
-
-    companion object {
-        const val YANDEX_REQUEST = "%s?key=%s&text=%s&lang=%s&format=plain"
     }
 }

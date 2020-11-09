@@ -50,6 +50,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NotificationLandingActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
     </application>
 

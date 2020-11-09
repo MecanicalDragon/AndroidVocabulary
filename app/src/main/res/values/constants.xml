@@ -3,8 +3,9 @@
     <string name="notificationWordPairsSet" description="Intent Extra from NotificationBroadcaster to NotificationLandingActivity">notification_word_pairs_set</string>
     <string name="wordsNotificationAction" description="NotificationBroadcaster action value">net.medrag.vocabulary.words.notification.action</string>
     <string name="wordsInNotificationAmount" description="Intent extra from NotificationSchedulingActivity to NotificationBroadcaster">wordsInNotificationAmount</string>
-    <string name="yandexApiKey" description="Key for yandex translator api">trnsl.1.1.20200522T225534Z.74169bcd6b4a4fcf.04a0d586ddb10facfdab32948eff3ab9b07c7f67</string>
-    <string name="yandexApiRequestUri" description="URI for yandex translator api">https://translate.yandex.net/api/v1.5/tr.json/translate</string>
+    <string name="yandexApiKey" description="Key for google translator api">5ec93ceb78mshc833973bf8a4f1ap1372b8jsna7cd057e114f</string>
+    <string name="yandexApiRequestUri" description="URI for google translator api">https://google-translate1.p.rapidapi.com/language/translate/v2</string>
+    <string name="postmanApiRequestUri" description="URI for postman tests">https://ca26a22a-0bc1-4f13-9877-f62f8aba0e53.mock.pstmn.io/language/translate/v2</string>
 
     <string name="notificationSchedulingProps" description="Used for fetching SharedPreferences in NotificationSchedulingActivity">net.medrag.vocabulary.notification.scheduling.props</string>
     <string name="notificationSchedulingPropsWordsAmount">net.medrag.vocabulary.notification.scheduling.props.words</string>
