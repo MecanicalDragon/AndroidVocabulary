@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if ((intent?.extras?.get(resources.getString(R.string.closeImmediately)) ?: false) == true) {
+            finish()
+        }
         database = Repository(this)
         yandexLink.movementMethod = LinkMovementMethod.getInstance()
         model.word.observe(this, Observer { wordInput.setText(it) })

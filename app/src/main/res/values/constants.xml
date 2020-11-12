@@ -13,6 +13,7 @@
     <string name="notificationSchedulingPropsSilentSince">net.medrag.vocabulary.notification.scheduling.props.silent.since</string>
     <string name="notificationSchedulingPropsSilentTill">net.medrag.vocabulary.notification.scheduling.props.silent.till</string>
     <string name="pairExtra">net.medrag.vocabulary.extra.pairExtra</string>
+    <string name="closeImmediately">net.medrag.vocabulary.activity.close.immediately</string>
 
     <integer name="notificationSchedulingPropsSilentSinceDefaultValue">79200</integer>
     <integer name="notificationSchedulingPropsSilentTillDefaultValue">36000</integer>

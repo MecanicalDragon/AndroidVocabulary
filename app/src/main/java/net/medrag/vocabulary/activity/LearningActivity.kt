@@ -96,7 +96,7 @@ class LearningActivity : AppCompatActivity() {
         if (iterator == voc.size) {
             val learned = voc.filter { it.learned }.toList()
             database.updateStreak(learned)
-            word.text = "Congratulations!"
+            word.text = ""
             (check as Button).text = "Finish"
             check.setOnClickListener {
                 finish()
@@ -104,6 +104,15 @@ class LearningActivity : AppCompatActivity() {
             if (learned.size == voc.size) {
                 database.increaseAchievementScore("get${voc.size}GoldenCup")
                 startActivity(Intent(this, AchievementsActivity::class.java))
+                newAchievement()
+            } else if (learned.size > (voc.size * 85 / 100)) {
+                database.increaseAchievementScore("get${voc.size}SilverCup")
+                startActivity(Intent(this, AchievementsActivity::class.java))
+                newAchievement()
+            } else if (learned.size > (voc.size * 70 / 100)) {
+                database.increaseAchievementScore("get${voc.size}BronzeCup")
+                startActivity(Intent(this, AchievementsActivity::class.java))
+                newAchievement()
             }
         } else {
             word.text = voc[iterator].trans
@@ -115,6 +124,13 @@ class LearningActivity : AppCompatActivity() {
         words.text = "${iterator}/${voc.size}"
         percentage.text = "${100 - model.mistakesCounter * 100 / iterator}%"
         tiEdit.text?.clear()
+    }
+
+    private fun newAchievement() {
+        Toast.makeText(this, "You've unlocked new achievement!", Toast.LENGTH_LONG).apply {
+            setGravity(Gravity.TOP, 0, percentage.bottom + TOAST_OFFSET)
+            show()
+        }
     }
 
     /**

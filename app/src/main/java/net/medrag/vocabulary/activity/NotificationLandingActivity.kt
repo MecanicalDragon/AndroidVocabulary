@@ -1,5 +1,6 @@
 package net.medrag.vocabulary.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -30,6 +31,10 @@ class NotificationLandingActivity : AppCompatActivity() {
             Toast.makeText(this, resources.getString(R.string.progressSaved), Toast.LENGTH_SHORT)
         makeText.setGravity(Gravity.TOP, 0, saveProgress.top - 300)
         makeText.show()
+        startActivity(Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            putExtra(resources.getString(R.string.closeImmediately), true)
+        })
         finish()
     }
 }

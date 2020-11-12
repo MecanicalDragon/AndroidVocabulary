@@ -108,7 +108,10 @@ class Repository(private val context: Context) :
     }
 
     fun getAchievements(): HashMap<String, Int> {
-        (database.rawQuery("select * from $ACHIEVEMENT", null)).use {
+        (database.rawQuery(
+            "select * from $ACHIEVEMENT union select 0, 'total', count() from $VOCABULARY",
+            null
+        )).use {
             val result = HashMap<String, Int>()
             val a = it.getColumnIndex(ACHIEVEMENT_NAME)
             val s = it.getColumnIndex(ACHIEVEMENT_SCORE)
