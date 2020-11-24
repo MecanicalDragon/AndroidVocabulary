@@ -205,6 +205,17 @@ class Repository(private val context: Context) :
         database.execSQL(sql)
     }
 
+    fun updateStreakFromNotification(pairs: List<Pair>) {
+        val learned = pairs.filter { it.learned }.toList()
+        updateStreak(learned)
+        if (learned.size == pairs.size) {
+            val sql = "update $ACHIEVEMENT set $ACHIEVEMENT_SCORE = $ACHIEVEMENT_SCORE + 1 " +
+                    "where $ACHIEVEMENT_NAME = 'allCorrect10'"
+            Log.i(DATABASE, "Executing SQL: $sql")
+            database.execSQL(sql)
+        }
+    }
+
     /**
      * Get all saved words
      */

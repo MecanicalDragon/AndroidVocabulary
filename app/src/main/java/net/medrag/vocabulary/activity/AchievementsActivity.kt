@@ -36,16 +36,35 @@ class AchievementsActivity : AppCompatActivity() {
 
         val totalWords = achievements["total"] ?: 0
         totalAddedNumber.text = (totalWords).toString()
-        totalAddedImage.setImageDrawable(resources.getDrawable(
-            when(totalWords) {
-                in 0..50 -> R.drawable.book1
-                in 51..100 -> R.drawable.book2
-                in 101..250 -> R.drawable.book3
-                in 251..500 -> R.drawable.book4
-                in 501..1000 -> R.drawable.book5
-                in 1001..2500 -> R.drawable.book6
-                else -> R.drawable.book7
-            })
-                    )
+        totalAddedImage.setImageDrawable(
+            resources.getDrawable(
+                when (totalWords) {
+                    in 0..50 -> R.drawable.book1
+                    in 51..100 -> R.drawable.book2
+                    in 101..250 -> R.drawable.book3
+                    in 251..500 -> R.drawable.book4
+                    in 501..1000 -> R.drawable.book5
+                    in 1001..2500 -> R.drawable.book6
+                    else -> R.drawable.book7
+                }
+            )
+        )
+
+        val allCorrect = achievements["allCorrect10"] ?: 0
+        notificationStreakNumber.text = (allCorrect).toString()
+        notificationStreakImage.setImageDrawable(
+            resources.getDrawable(
+                when (allCorrect) {
+                    in 0..10 -> R.drawable.b1
+                    in 11..50 -> R.drawable.b2
+                    in 51..100 -> R.drawable.b3
+                    in 101..250 -> R.drawable.b4
+                    in 251..500 -> R.drawable.b5
+                    in 501..1000 -> R.drawable.b6
+                    in 1001..2500 -> R.drawable.b7
+                    else -> R.drawable.b8
+                }
+            )
+        )
     }
 }

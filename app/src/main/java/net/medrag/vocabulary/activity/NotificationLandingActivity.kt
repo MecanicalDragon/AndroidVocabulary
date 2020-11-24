@@ -26,7 +26,7 @@ class NotificationLandingActivity : AppCompatActivity() {
     }
 
     fun saveProgress(@Suppress("UNUSED_PARAMETER") view: View) {
-        Repository(this).updateStreak(words.filter { it.learned }.toList())
+        Repository(this).updateStreakFromNotification(words)
         val makeText =
             Toast.makeText(this, resources.getString(R.string.progressSaved), Toast.LENGTH_SHORT)
         makeText.setGravity(Gravity.TOP, 0, saveProgress.top - 300)

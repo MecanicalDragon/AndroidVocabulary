@@ -463,11 +463,41 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/notificationStreakImage"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginTop="370dp"
+                app:layout_constraintEnd_toStartOf="@+id/totalAddedImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/achievementsLabel" />
+
+            <TextView
+                android:id="@+id/notificationStreakText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All correct:"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="7dp"
+                app:layout_constraintStart_toStartOf="@+id/notificationStreakImage"
+                app:layout_constraintTop_toBottomOf="@+id/notificationStreakImage" />
+
+            <TextView
+                android:id="@+id/notificationStreakNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="30sp"
+                app:layout_constraintTop_toBottomOf="@+id/notificationStreakImage"
+                app:layout_constraintStart_toEndOf="@+id/notificationStreakText" />
+
+            <ImageView
                 android:id="@+id/totalAddedImage"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_marginTop="370dp"
-                app:layout_constraintEnd_toEndOf="@+id/bronzeCups100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/notificationStreakImage"
                 app:layout_constraintTop_toBottomOf="@+id/achievementsLabel" />
 
             <TextView
@@ -475,8 +505,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Words added:"
-                app:layout_constraintEnd_toStartOf="@+id/totalAddedImage"
-                app:layout_constraintTop_toTopOf="@+id/totalAddedImage" />
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="7dp"
+                app:layout_constraintStart_toStartOf="@+id/totalAddedImage"
+                app:layout_constraintTop_toBottomOf="@+id/totalAddedImage" />
 
             <TextView
                 android:id="@+id/totalAddedNumber"
@@ -485,8 +517,8 @@
                 android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/totalAddedImage"
-                app:layout_constraintTop_toBottomOf="@+id/totalAddedText" />
+                app:layout_constraintTop_toBottomOf="@+id/totalAddedImage"
+                app:layout_constraintStart_toEndOf="@+id/totalAddedText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
