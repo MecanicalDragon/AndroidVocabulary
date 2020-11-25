@@ -44,7 +44,8 @@ class LearningActivity : AppCompatActivity() {
         // Retrieve vocabulary with specified size
         if (model.voc.isEmpty()) {
             val amount = intent?.extras?.getInt(resources.getString(R.string.pickAmount)) ?: 10
-            model.voc = database.getWorstLearnedPairs(amount)
+            val random = intent?.extras?.getBoolean(resources.getString(R.string.random)) ?: false
+            model.voc = database.getPairsToLearn(amount, random)
         }
         if (model.voc.isNotEmpty()) {
             word.text = model.getTranslation()

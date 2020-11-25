@@ -172,10 +172,26 @@ class Repository(private val context: Context) :
         }
     }
 
+    //TODO: what if here is not enough words in vocabulary?
+    fun getPairsToLearn(amount: Int, random: Boolean) =
+        if (random) getRandomPairs(amount)
+        else getWorstLearnedPairs(amount)
+
+    /**
+     * Retrieve random words.
+     */
+    private fun getRandomPairs(amount: Int): ArrayList<Pair> {
+        (database.rawQuery(
+            "select * from $VOCABULARY order by random() limit ?", arrayOf(amount.toString())
+        )).use {
+            return mapCursorToPairArray(it)
+        }
+    }
+
     /**
      * Retrieve worst learned words.
      */
-    fun getWorstLearnedPairs(amount: Int): ArrayList<Pair> {
+    private fun getWorstLearnedPairs(amount: Int): ArrayList<Pair> {
         (database.rawQuery(
             "select * from $VOCABULARY order by $STREAK ASC limit ?",
             arrayOf(amount.toString())
@@ -187,7 +203,8 @@ class Repository(private val context: Context) :
     /**
      * Retrieve random not learned yet words.
      */
-    fun getRandomSeveralPairs(amount: Int): ArrayList<Pair> {
+    //TODO: think up a better randomizing solution
+    fun getWordsForNotification(amount: Int): ArrayList<Pair> {
         val learnedMarker = context.resources.getInteger(R.integer.correctAnswersToLearnAmount)
         (database.rawQuery(
             "select * from $VOCABULARY where $STREAK < ? order by random() limit ?",
@@ -208,7 +225,7 @@ class Repository(private val context: Context) :
     fun updateStreakFromNotification(pairs: List<Pair>) {
         val learned = pairs.filter { it.learned }.toList()
         updateStreak(learned)
-        if (learned.size == pairs.size) {
+        if (learned.size == pairs.size && learned.size > 2) {
             val sql = "update $ACHIEVEMENT set $ACHIEVEMENT_SCORE = $ACHIEVEMENT_SCORE + 1 " +
                     "where $ACHIEVEMENT_NAME = 'allCorrect10'"
             Log.i(DATABASE, "Executing SQL: $sql")
@@ -243,11 +260,6 @@ class Repository(private val context: Context) :
         }
         return result
     }
-
-    //
-//    fun delete() {
-//        database.delete(TABLE_NAME, "ID = ?", Array<String>(5) { "1" })
-//    }
 
     companion object {
 

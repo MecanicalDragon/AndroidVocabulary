@@ -464,8 +464,8 @@
 
             <ImageView
                 android:id="@+id/notificationStreakImage"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="370dp"
                 app:layout_constraintEnd_toStartOf="@+id/totalAddedImage"
                 app:layout_constraintStart_toStartOf="parent"
@@ -475,9 +475,8 @@
                 android:id="@+id/notificationStreakText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All correct:"
+                android:text="@string/allCorrect"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="7dp"
                 app:layout_constraintStart_toStartOf="@+id/notificationStreakImage"
                 app:layout_constraintTop_toBottomOf="@+id/notificationStreakImage" />
 
@@ -488,13 +487,14 @@
                 android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
+                android:layout_marginLeft="5dp"
                 app:layout_constraintTop_toBottomOf="@+id/notificationStreakImage"
                 app:layout_constraintStart_toEndOf="@+id/notificationStreakText" />
 
             <ImageView
                 android:id="@+id/totalAddedImage"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="370dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/notificationStreakImage"
@@ -504,9 +504,8 @@
                 android:id="@+id/totalAddedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Words added:"
+                android:text="@string/wordsAdded"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="7dp"
                 app:layout_constraintStart_toStartOf="@+id/totalAddedImage"
                 app:layout_constraintTop_toBottomOf="@+id/totalAddedImage" />
 
@@ -517,6 +516,7 @@
                 android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
+                android:layout_marginLeft="5dp"
                 app:layout_constraintTop_toBottomOf="@+id/totalAddedImage"
                 app:layout_constraintStart_toEndOf="@+id/totalAddedText" />
 

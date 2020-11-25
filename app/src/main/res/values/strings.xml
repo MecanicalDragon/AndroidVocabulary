@@ -39,4 +39,8 @@
     <string name="noUpd">Nothing to update now!</string>
     <string name="achievements">Achievements</string>
     <string name="achievementsColon">Achievements:</string>
+    <string name="wordsAdded">Words added:</string>
+    <string name="allCorrect">All correct:</string>
+    <string name="leastLearned">Least learned</string>
+    <string name="random">Random</string>
 </resources>

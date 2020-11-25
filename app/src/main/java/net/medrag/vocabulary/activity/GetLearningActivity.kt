@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_get_learning.*
 import net.medrag.vocabulary.R
 
 class GetLearningActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class GetLearningActivity : AppCompatActivity() {
         }
         startActivity(Intent(this, LearningActivity::class.java).apply {
             putExtra(resources.getString(R.string.pickAmount), amount)
+            putExtra(resources.getString(R.string.random), getRandomWordsSwitcher.isChecked)
         })
     }
 }

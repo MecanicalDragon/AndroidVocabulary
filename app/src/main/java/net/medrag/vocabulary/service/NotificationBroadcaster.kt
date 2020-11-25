@@ -35,7 +35,7 @@ class NotificationBroadcaster : BroadcastReceiver() {
             return
         }
         createChannel(context)
-        val pairs = Repository(context).getRandomSeveralPairs(
+        val pairs = Repository(context).getWordsForNotification(
             incoming.extras?.getInt(
                 context.resources.getString(R.string.wordsInNotificationAmount)
             ) as Int
